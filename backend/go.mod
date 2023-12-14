@@ -1,4 +1,4 @@
-module github.com/PtMK2/ShareFoodRestaurant
+module github.com/PtMK2/EatSnap
 
 go 1.21.4
 
