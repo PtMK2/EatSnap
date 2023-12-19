@@ -48,6 +48,7 @@ export default function App() {
 				</form>
 
 				<p className="arrow next">
+					<span className="dli-arrow-right"></span>
 					<label htmlFor="switch1" onClick={handleSubmit}></label>
 					<label htmlFor="switch2"></label>
 					<label htmlFor="switch3"></label>

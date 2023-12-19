@@ -83,6 +83,7 @@ input[name="slideshow"] {
 	cursor: pointer;
 	width: 50px;
 	height: 50px;
+	border-radius: 5px;
 }
 .arrow label {
 	top: 0;
@@ -140,3 +141,31 @@ input[name="slideshow"] {
 	pointer-events: auto;
 }
 
+.dli-arrow-right {
+	display: inline-block;
+	vertical-align: middle;
+	color: #333;
+	line-height: 1;
+	position: relative;
+	width: 1em;
+	height: 0.1em;
+	background: currentColor;
+	z-index: 2;
+	top: 25%;
+	left: 35%;
+  }
+  
+  .dli-arrow-right::before {
+	content: '';
+	width: 0.65em;
+	height: 0.65em;
+	border: 0.1em solid currentColor;
+	border-left: 0;
+	border-bottom: 0;
+	transform: rotate(45deg);
+	transform-origin: top right;
+	position: absolute;
+	top: 50%;
+	right: -0.05em;
+	box-sizing: border-box;
+  }
