@@ -12,7 +12,7 @@ func connectDB() *sql.DB {
 	}
 	c := mysql.Config{
 		DBName:    "eatsnapDB",
-		User:      "user",
+		User:      "root",
 		Passwd:    "password",
 		Addr:      "localhost:3306",
 		Net:       "tcp",
