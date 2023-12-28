@@ -20,6 +20,7 @@ func connectDB() *sql.DB {
 		Collation: "utf8mb4_unicode_ci",
 		Loc:       jst,
 	}
+	db, err := sql.Open("mysql", c.FormatDSN())
 	if err != nil {
         log.Fatalf("Failed to open database: %v", err)
     }
