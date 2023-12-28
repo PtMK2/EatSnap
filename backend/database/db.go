@@ -1,11 +1,14 @@
 import (
 	"database/sql"
+	"log"
 	"time"
-
+	
 	"github.com/go-sql-driver/mysql"
 )
 
-func connectDB() *sql.DB {
+var DB *sql.DB
+
+func connectDB() {
 	jst, err := time.LoadLocation("Asia/Tokyo")
 	if err != nil {
 		log.Fatalf("Failed to load location: %v", err)
