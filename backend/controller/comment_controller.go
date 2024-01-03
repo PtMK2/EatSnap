@@ -1,10 +1,10 @@
-package controllers
+package controller
 
 import (
     "net/http"
     "github.com/gin-gonic/gin"
-    "backend/models"
-    "backend/database"
+    "github.com/PtMK2/EatSnap/backend/model"
+    "github.com/PtMK2/EatSnap/backend/database"
 )
 
 func PostComment(c *gin.Context) {

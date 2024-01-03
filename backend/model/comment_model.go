@@ -1,4 +1,6 @@
-package models
+package model
+
+import "time"
 
 type Comment struct {
     CommentID     int    `json:"comment_id" gorm:"primaryKey"`

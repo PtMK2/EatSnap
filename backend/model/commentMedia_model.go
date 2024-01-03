@@ -1,4 +1,4 @@
-package models
+package model
 
 type CommentMedia struct {
     MediaID     int    `json:"media_id" gorm:"primaryKey"`

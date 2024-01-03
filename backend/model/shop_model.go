@@ -1,4 +1,4 @@
-package models
+package model
 
 // Shop は店舗の情報を表す構造体です。
 type Shop struct {

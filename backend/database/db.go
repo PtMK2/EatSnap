@@ -1,3 +1,5 @@
+package database
+
 import (
 	"database/sql"
 	"log"
@@ -8,7 +10,7 @@ import (
 
 var DB *sql.DB
 
-func connectDB() {
+func ConnectDB() {
 	jst, err := time.LoadLocation("Asia/Tokyo")
 	if err != nil {
 		log.Fatalf("Failed to load location: %v", err)
