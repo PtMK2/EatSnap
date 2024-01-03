@@ -4,11 +4,13 @@ import (
 	"database/sql"
 	"log"
 	"time"
-	
+
+	"github.com/jinzhu/gorm"
 	"github.com/go-sql-driver/mysql"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-var DB *sql.DB
+var DB *gorm.DB
 
 func ConnectDB() {
 	jst, err := time.LoadLocation("Asia/Tokyo")
