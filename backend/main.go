@@ -1,14 +1,9 @@
 package main
-import "github.com/PtMK2/EatSnap/backend/database"
-import "github.com/PtMK2/EatSnap/backend/controller"
+
 import (
 	"github.com/gin-gonic/gin"
-    // "backend/database"
-    // "backend/controller"
-    //"github.com/PtMK2/EatSnap/backend/database"
-    //"github.com/PtMK2/EatSnap/backend/controller"
-    //"github.com/PtMK2/EatSnap/backend/database"
-
+    "github.com/PtMK2/EatSnap/backend/controller"
+    "github.com/PtMK2/EatSnap/backend/database"
 )
 
 func main() {
@@ -27,3 +22,4 @@ func main() {
 	// サーバー起動
 	router.Run(":8080")
 }
+
