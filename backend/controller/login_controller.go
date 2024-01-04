@@ -7,11 +7,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func getSignup(c *gin.Context) {
+func GetSignup(c *gin.Context) {
 	c.HTML(http.StatusOK, "signup.html", nil)
 }
 
-func postSignup(c *gin.Context) {
+func PostSignup(c *gin.Context) {
 	id := c.PostForm("user_id")
 	pw := c.PostForm("password")
 	user, err := model.Signup(id, pw)
@@ -22,11 +22,11 @@ func postSignup(c *gin.Context) {
 	c.HTML(http.StatusOK, "home.html", gin.H{"user": user})
 }
 
-func getLogin(c *gin.Context) {
+func GetLogin(c *gin.Context) {
 	c.HTML(http.StatusOK, "login.html", nil)
 }
 
-func postLogin(c *gin.Context) {
+func PostLogin(c *gin.Context) {
 	id := c.PostForm("user_id")
 	pw := c.PostForm("password")
 
