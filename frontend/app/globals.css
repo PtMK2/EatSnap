@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -25,3 +26,146 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+*/
+
+p {
+	color: white;
+}
+
+.slideshow {
+	position: relative;
+	overflow: hidden;
+}
+input[name="slideshow"] {
+	display: none;
+}
+
+/* :::::: slideContents :::::: */
+.slideContents {
+	display: flex;
+	position: relative;
+	width: 500%;
+	background: #101010;
+	text-align: center;
+	-webkit-user-select: none;
+	user-select: none;
+	transition: transform .6s cubic-bezier(0.215, 0.61, 0.355, 1);
+	height: 100vh;
+}
+.slideContents section {
+	width: 20%;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+
+/* :::::: arrows :::::: */
+.arrow,
+.arrow label,
+.arrow .ico {
+	position: absolute;
+}
+.arrow {
+	bottom: 10px;
+	margin: 0;
+	transition: background .3s;
+}
+
+.next {
+	right: 10px;
+}
+.arrow:hover {
+	background: rgba(255,255,255,.2);
+}
+.arrow,
+.arrow label {
+	background-color: white;
+	cursor: pointer;
+	width: 50px;
+	height: 50px;
+	border-radius: 5px;
+}
+.arrow label {
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+.arrow .ico {
+	top: calc(50% - 6px);
+	width: 12px;
+	height: 12px;
+	border-top: 3px solid #fff;
+	opacity: 0;
+}
+
+.next .ico {
+	right: 50%;
+	border-right: 3px solid #fff;
+	transform: rotate(45deg);
+	transition: right .3s cubic-bezier(0.215, 0.61, 0.355, 1), opacity .3s;
+}
+.arrow:hover .ico {
+	opacity: .6;
+}
+
+.next:hover .ico {
+	right: calc(50% - 6px);
+}
+
+/* :::::: mechanism :::::: */
+#switch1:checked ~ .slideContents {
+	transform: translateX(0);
+}
+#switch2:checked ~ .slideContents {
+	transform: translateX(-20%);
+}
+#switch3:checked ~ .slideContents {
+	transform: translateX(-40%);
+}
+#switch4:checked ~ .slideContents {
+	transform: translateX(-60%);
+}
+#switch5:checked ~ .slideContents {
+	transform: translateX(-80%);
+}
+
+/* :::::: arrow mechanism :::::: */
+.arrow label {
+	pointer-events: none;
+}
+
+#switch1:checked ~ .next label[for="switch2"],
+#switch2:checked ~ .next label[for="switch3"],
+#switch3:checked ~ .next label[for="switch4"],
+#switch4:checked ~ .next label[for="switch1"] {
+	pointer-events: auto;
+}
+
+.dli-arrow-right {
+	display: inline-block;
+	vertical-align: middle;
+	color: #333;
+	line-height: 1;
+	position: relative;
+	width: 1em;
+	height: 0.1em;
+	background: currentColor;
+	z-index: 2;
+	top: 25%;
+	left: 35%;
+  }
+  
+  .dli-arrow-right::before {
+	content: '';
+	width: 0.65em;
+	height: 0.65em;
+	border: 0.1em solid currentColor;
+	border-left: 0;
+	border-bottom: 0;
+	transform: rotate(45deg);
+	transform-origin: top right;
+	position: absolute;
+	top: 50%;
+	right: -0.05em;
+	box-sizing: border-box;
+  }
