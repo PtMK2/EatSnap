@@ -10,6 +10,7 @@ import (
 var DB *gorm.DB
 
 func ConnectDB() {
+	//(db:3306)はdocker-compose.ymlのmysqlのポート番号でdocker用の書き方。
     dsn := "root:password@tcp(db:3306)/eatsnapDB?charset=utf8mb4&parseTime=True&loc=Asia%2FTokyo"
 	var err error
     DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
