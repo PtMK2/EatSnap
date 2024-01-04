@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/PtMK2/EatSnap/backend/crypto"
-
+	"github.com/PtMK2/EatSnap/backend/database"
 	"gorm.io/gorm"
 )
 
@@ -15,8 +15,14 @@ type User struct {
 	Password string
 }
 
-func init() {
-	Db.Set("gorm:table_options", "ENGINE = InnoDB").AutoMigrate(User{})
+// func init() {
+// 	database.DB.Set("gorm:table_options", "ENGINE = InnoDB").AutoMigrate(User{})
+// }
+
+func SetupDB() {
+    db := database.DB
+    db.Set("gorm:table_options", "ENGINE=InnoDB")
+    db.AutoMigrate(&User{})
 }
 
 func (u *User) LoggedIn() bool {
@@ -25,7 +31,7 @@ func (u *User) LoggedIn() bool {
 
 func Signup(userId, password string) (*User, error) {
 	user := User{}
-	Db.Where("user_id = ?", userId).First(&user)
+	database.DB.Where("user_id = ?", userId).First(&user)
 	if user.ID != 0 {
 		err := errors.New("同一名のUserIdが既に登録されています。")
 		fmt.Println(err)
@@ -38,13 +44,13 @@ func Signup(userId, password string) (*User, error) {
 		return nil, err
 	}
 	user = User{UserId: userId, Password: encryptPw}
-	Db.Create(&user)
+	database.DB.Create(&user)
 	return &user, nil
 }
 
 func Login(userId, password string) (*User, error) {
 	user := User{}
-	Db.Where("user_id = ?", userId).First(&user)
+	database.DB.Where("user_id = ?", userId).First(&user)
 	if user.ID == 0 {
 		err := errors.New("UserIdが一致するユーザーが存在しません。")
 		fmt.Println(err)

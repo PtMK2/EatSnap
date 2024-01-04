@@ -33,7 +33,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: mydatabase
+      MYSQL_DATABASE: eatsnapDB
       TZ: 'Asia/Tokyo'
     volumes:
       - ./mysql/conf.d:/etc/mysql/conf.d
