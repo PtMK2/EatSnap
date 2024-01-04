@@ -1,7 +1,9 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	  "gorm.io/driver/mysql"
+	  "gorm.io/gorm"
+    "github.com/gin-gonic/gin"
     "github.com/PtMK2/EatSnap/backend/controller"
     "github.com/PtMK2/EatSnap/backend/database"
 )
