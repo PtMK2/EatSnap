@@ -6,6 +6,7 @@ import (
 
 	"github.com/PtMK2/EatSnap/backend/crypto"
 	"github.com/PtMK2/EatSnap/backend/database"
+
 	"gorm.io/gorm"
 )
 
@@ -32,6 +33,7 @@ func (u *User) LoggedIn() bool {
 func Signup(userId, password string) (*User, error) {
 	user := User{}
 	database.DB.Where("user_id = ?", userId).First(&user)
+
 	if user.ID != 0 {
 		err := errors.New("同一名のUserIdが既に登録されています。")
 		fmt.Println(err)
@@ -51,6 +53,7 @@ func Signup(userId, password string) (*User, error) {
 func Login(userId, password string) (*User, error) {
 	user := User{}
 	database.DB.Where("user_id = ?", userId).First(&user)
+
 	if user.ID == 0 {
 		err := errors.New("UserIdが一致するユーザーが存在しません。")
 		fmt.Println(err)
