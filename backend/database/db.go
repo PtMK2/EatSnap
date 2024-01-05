@@ -1,22 +1,33 @@
 package database
 
 import (
+	"database/sql"
 	"log"
+	"time"
 	
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
+	"github.com/go-sql-driver/mysql"
 )
 
-var DB *gorm.DB
+var DB *sql.DB
 
 func ConnectDB() {
-	//(db:3306)はdocker-compose.ymlのmysqlのポート番号でdocker用の書き方。
-    dsn := "root:password@tcp(db:3306)/eatsnapDB?charset=utf8mb4&parseTime=True&loc=Asia%2FTokyo"
-	var err error
-    DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-    if err != nil {
+	jst, err := time.LoadLocation("Asia/Tokyo")
+	if err != nil {
+		log.Fatalf("Failed to load location: %v", err)
+	}
+	c := mysql.Config{
+		DBName:    "eatsnapDB",
+		User:      "root",
+		Passwd:    "password",
+		Addr:      "localhost:3306",
+		Net:       "tcp",
+		ParseTime: true,
+		Collation: "utf8mb4_unicode_ci",
+		Loc:       jst,
+	}
+	db, err := sql.Open("mysql", c.FormatDSN())
+	if err != nil {
         log.Fatalf("Failed to open database: %v", err)
     }
+    DB = db
 }
-
-
