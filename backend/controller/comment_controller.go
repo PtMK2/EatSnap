@@ -2,9 +2,10 @@ package controller
 
 import (
     "net/http"
+    "strconv"
+
     "github.com/gin-gonic/gin"
     "github.com/PtMK2/EatSnap/backend/model"
-    "github.com/PtMK2/EatSnap/backend/database"
 )
 
 func ShowAllCommentsByUserID(c *gin.Context) {
@@ -54,8 +55,16 @@ func UpdateComment(c *gin.Context) {
 }
 
 func DeleteCommentByUserID(c *gin.Context) {
-    commentID := c.Param("comment_id")
-    err := model.DeleteCommentByID(commentID)
+    commentIDStr := c.Param("comment_id")
+
+    //int型に変換
+    commentID, err := strconv.Atoi(commentIDStr)
+    
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid comment ID"})
+        return
+    }
+    err = model.DeleteCommentByUserID(commentID)
     if err != nil {
         c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
         return

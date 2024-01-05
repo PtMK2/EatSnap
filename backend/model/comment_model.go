@@ -8,6 +8,7 @@ import(
 )
 
 type Comment struct {
+    gorm.Model
     CommentID     int    `json:"comment_id" gorm:"primaryKey"`
     Score         int    `json:"score"`
     CommentIntro  string `json:"comment_intro"`
