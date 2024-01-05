@@ -8,7 +8,8 @@ import (
 )
 
 func PostComment(c *gin.Context) {
-    var newComment models.Comment
+    var newComment model.Comment
+  
     // リクエストボディからコメントデータをバインドする
     if err := c.ShouldBindJSON(&newComment); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -26,7 +27,8 @@ func PostComment(c *gin.Context) {
 }
 
 func GetComment(c *gin.Context) {
-	var comment models.Comment
+	var comment model.Comment
+
 	commentID := c.Param("comment_id")
 
 	// コメントIDを指定してコメントを取得
