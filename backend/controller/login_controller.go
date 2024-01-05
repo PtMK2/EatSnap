@@ -3,7 +3,7 @@ package controller
 import (
 	"net/http"
 
-	"github.com/PtMK2/EatSnap/model"
+	"github.com/PtMK2/EatSnap/backend/model"
 	"github.com/gin-gonic/gin"
 )
 
