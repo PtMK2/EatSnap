@@ -1,55 +1,61 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import './login.css';
 
-const Login = () => {
+// データベースから取得するデータの型
+interface UserData {
+  id: string;
+  password: string;
+}
+
+export default function Login() {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    console.log('ID:', id, 'Password:', password);
-    // ログインロジックをここに追加
+  const handleSubmit = async (event: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
+    event.preventDefault();
+    const data: UserData = {
+      id,
+      password
+    };
+    console.log('Form data:', data);
+
+    // データベースへの接続とデータの送信を行う処理をここに書く
+    // ...
+
+    if (response.ok) {
+      console.log('Login successful');
+      // ログイン成功後の処理をここに書く
+    } else {
+      console.error('Login failed');
+    }
+  };
+
+  const handleSignUp = () => {
+    // 新規登録ボタンの処理をここに書く
+  };
+
+  const handleForgotPassword = () => {
+    // パスワードを忘れた人用ボタンの処理をここに書く
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="ID"
-        value={id}
-        onChange={(e) => setId(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>Login</button>
-    </div>
+    <>
+      <form>
+        <label>
+          ID:
+          <input type="text" value={id} onChange={(e) => setId(e.target.value)} />
+        </label>
+        <br />
+        <label>
+          Password:
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        </label>
+        <br />
+        <button onClick={handleSubmit} name="loginButton">ログイン</button>
+        <button onClick={handleSignUp} name="signupButton">新規登録</button>
+        <button onClick={handleForgotPassword} name="forgetButton">ID,パスワードを忘れた方</button>
+      </form>
+    </>
   );
-};
-
-function ClientSideComponent() {
-  useEffect(() => {
-    console.log("このコードはクライアントサイドでのみ実行されます");
-  }, []);
-
-  return <div>クライアントサイド専用コンテンツ</div>;
-}
-
-function Page() {
-  const [isClientSide, setIsClientSide] = useState(false);
-
-  useEffect(() => {
-    setIsClientSide(true);
-  }, []);
-
-  return (
-    <div>
-      <Login />
-      {isClientSide && <ClientSideComponent />}
-    </div>
-  );
-}
-
-export default Page;
+ID}
