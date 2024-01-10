@@ -11,8 +11,10 @@ import (
 type User struct {
 	// gorm.Model
 	// ID       uint `gorm:"primaryKey"`
-	UserId   string
-	UserPass string
+	UserId   string `gorm:"column:user_id"`
+	UserPass string `gorm:"column:user_pass"`
+	UserName string `gorm:"column:user_name"`
+	UserMail string `gorm:"column:user_mail"`
 }
 
 // func init() {
@@ -32,7 +34,7 @@ func (u *User) LoggedIn() bool {
 	return u.UserId != ""
 }
 
-func Signup(userId, password string) (*User, error) {
+func Signup(userId, password string, username string, usermail string) (*User, error) {
 	user := User{}
 	database.DB.Where("user_id = ?", userId).First(&user)
 	if user.UserId != "" {
@@ -46,7 +48,7 @@ func Signup(userId, password string) (*User, error) {
 		fmt.Println("パスワード暗号化中にエラーが発生しました。：", err)
 		return nil, err
 	}
-	user = User{UserId: userId, UserPass: encryptPw}
+	user = User{UserId: userId, UserPass: encryptPw, UserName: username, UserMail: usermail}
 	database.DB.Create(&user)
 	return &user, nil
 }
