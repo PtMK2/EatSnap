@@ -15,15 +15,18 @@ type User struct {
 	Password string
 }
 
-// func init() {
-// 	database.DB.Set("gorm:table_options", "ENGINE = InnoDB").AutoMigrate(User{})
-// }
-
-func SetupDB() {
-    db := database.DB
-    db.Set("gorm:table_options", "ENGINE=InnoDB")
-    db.AutoMigrate(&User{})
+func init() {
+	// database.DB.Set("gorm:table_options", "ENGINE = InnoDB").AutoMigrate(User{})
+	db := database.DB
+	db.Set("gorm:table_options", "ENGINE=InnoDB")
+	db.AutoMigrate(&User{})
 }
+
+// func SetupDB() {
+//     db := database.DB
+//     db.Set("gorm:table_options", "ENGINE=InnoDB")
+//     db.AutoMigrate(&User{})
+// }
 
 func (u *User) LoggedIn() bool {
 	return u.ID != 0
