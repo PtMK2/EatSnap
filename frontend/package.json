@@ -13,6 +13,8 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@react-google-maps/api": "^2.19.2",
+    "@types/axios": "^0.14.0",
+    "axios": "^1.6.5",
     "framer-motion": "^10.18.0",
     "next": "14.0.3",
     "next-link": "^2.0.0",
