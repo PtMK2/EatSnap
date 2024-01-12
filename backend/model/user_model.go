@@ -34,7 +34,7 @@ func (u *User) LoggedIn() bool {
 	return u.UserId != ""
 }
 
-func Signup(userId, password string, username string, usermail string) (*User, error) {
+func Signup(userId, password, username, usermail string) (*User, error) {
 	user := User{}
 	database.DB.Where("user_id = ?", userId).First(&user)
 	if user.UserId != "" {
@@ -48,25 +48,31 @@ func Signup(userId, password string, username string, usermail string) (*User, e
 		fmt.Println("パスワード暗号化中にエラーが発生しました。：", err)
 		return nil, err
 	}
+
 	user = User{UserId: userId, UserPass: encryptPw, UserName: username, UserMail: usermail}
+	fmt.Println(user.UserName)
 	database.DB.Create(&user)
 	return &user, nil
 }
 
-func Login(userId, password string) (*User, error) {
+func Login(mail, password string) (*User, error) {
 	user := User{}
-	database.DB.Where("user_id = ?", userId).First(&user)
-	if user.UserId == "" {
-		err := errors.New("UserIdが一致するユーザーが存在しません。")
+	database.DB.Where("user_id = ?", mail).First(&user)
+	if user.UserMail == "" {
+		err := errors.New("メールアドレス又はパスワードが違います。")
 		fmt.Println(err)
 		return nil, err
 	}
 
 	err := crypto.CompareHashAndPassword(user.UserPass, password)
 	if err != nil {
-		fmt.Println("パスワードが一致しませんでした。：", err)
+		fmt.Println("メールアドレス又はパスワードが違います。", err)
 		return nil, err
 	}
 
 	return &user, nil
+}
+
+func GetOneUser(userId string) {
+
 }
