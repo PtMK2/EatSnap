@@ -17,13 +17,13 @@ func GetRouter() *gin.Engine {
 	// こんな感じでルーティングを追加していく
 	//ただフロントがどうなっているかわからないのでコメントアウトしとく
 
-	router.GET("/", controller.controller.GetMapHome)
+	router.GET("/", controller.GetHome)
 
 	loginCheckGroup := router.Group("/", checkLogin())
 	{
 		loginCheckGroup.GET("/mypage", controller.GetMypage)
 		loginCheckGroup.GET("/logout", controller.GetLogout)
-		loginCheckGroup.GET("/threadHome", controller.GetThreadHome)
+		loginCheckGroup.GET("/map", controller.GetMapHome)
 	}
 	logoutCheckGroup := router.Group("/", checkLogout())
 	{

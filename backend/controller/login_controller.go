@@ -23,6 +23,8 @@ func PostSignup(c *gin.Context) {
 		c.Redirect(301, "/signup")
 		return
 	}
+	cookieKey := os.Getenv("LOGIN_USER_ID_KEY")
+	model_redis.NewSession(c, cookieKey, user.UserId)
 	c.HTML(http.StatusOK, "home.html", gin.H{"user": user})
 }
 
@@ -39,6 +41,8 @@ func PostLogin(c *gin.Context) {
 		c.Redirect(301, "/login")
 		return
 	}
+	cookieKey := os.Getenv("LOGIN_USER_ID_KEY")
+	model_redis.NewSession(c, cookieKey, user.UserId)
 	c.HTML(http.StatusOK, "top.html", gin.H{"user": user})
 }
 
