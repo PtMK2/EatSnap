@@ -43,7 +43,7 @@ func PostLogin(c *gin.Context) {
 	}
 	cookieKey := os.Getenv("LOGIN_USER_ID_KEY")
 	model_redis.NewSession(c, cookieKey, user.UserId)
-	c.HTML(http.StatusOK, "top.html", gin.H{"user": user})
+	c.HTML(http.StatusOK, "mypage.html", gin.H{"user": user})
 }
 
 func GetLogout(c *gin.Context) {
