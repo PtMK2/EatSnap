@@ -19,12 +19,12 @@ func GetMapHome(c *gin.Context) {
 }
 
 func renderPage(c *gin.Context, templateName string) {
-	user := model.User{}
+	user := &model.User{}
 	cookieKey := os.Getenv("LOGIN_USER_ID_KEY")
 	userId := model_redis.GetSession(c, cookieKey)
-
+	var err error
 	if userId != nil {
-		user, err := model.GetOneUser(userId.(string))
+		user, err = model.GetOneUser(userId.(string))
 		if err != nil {
 			log.Println("Failed to get user:", err)
 			c.AbortWithError(http.StatusInternalServerError, err)
