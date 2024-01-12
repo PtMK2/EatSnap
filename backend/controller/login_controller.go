@@ -42,7 +42,7 @@ func PostLogin(c *gin.Context) {
 	c.HTML(http.StatusOK, "top.html", gin.H{"user": user})
 }
 
-func getLogout(c *gin.Context) {
+func GetLogout(c *gin.Context) {
 	cookieKey := os.Getenv("LOGIN_USER_ID_KEY")
 	model_redis.DeleteSession(c, cookieKey)
 	c.Redirect(http.StatusFound, "/")

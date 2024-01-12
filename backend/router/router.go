@@ -17,10 +17,13 @@ func GetRouter() *gin.Engine {
 	// こんな感じでルーティングを追加していく
 	//ただフロントがどうなっているかわからないのでコメントアウトしとく
 
+	router.GET("/", controller.controller.GetMapHome)
+
 	loginCheckGroup := router.Group("/", checkLogin())
 	{
 		loginCheckGroup.GET("/mypage", controller.GetMypage)
 		loginCheckGroup.GET("/logout", controller.GetLogout)
+		loginCheckGroup.GET("/threadHome", controller.GetThreadHome)
 	}
 	logoutCheckGroup := router.Group("/", checkLogout())
 	{
@@ -30,11 +33,11 @@ func GetRouter() *gin.Engine {
 		logoutCheckGroup.POST("/login", controller.PostLogin)
 	}
 
-	router.GET("/signup", controller.GetSignup)
-	router.POST("/signup", controller.PostSignup)
-	router.GET("/login", controller.GetLogin)
-	router.POST("/login", controller.PostLogin)
-	router.GET("/", controller.GetTop)
+	// router.GET("/signup", controller.GetSignup)
+	// router.POST("/signup", controller.PostSignup)
+	// router.GET("/login", controller.GetLogin)
+	// router.POST("/login", controller.PostLogin)
+	// router.GET("/", controller.GetTop)
 	// router.GET("/top", controller.GetTop)
 	// router.GET("/home", controller.GetHome)
 	// router.GET("/logout", controller.GetLogout)

@@ -73,6 +73,13 @@ func Login(mail, password string) (*User, error) {
 	return &user, nil
 }
 
-func GetOneUser(userId string) {
-
+func GetOneUser(userId string) (*User, error) {
+	user := User{}
+	database.DB.Where("user_id = ?", userId).First(&user)
+	if user.UserId != "" {
+		err := errors.New("子のユーザーIDは使用されていません。")
+		fmt.Println(err)
+		return nil, err
+	}
+	return &user, nil
 }

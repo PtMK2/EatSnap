@@ -1,11 +1,12 @@
 package controller
 
 import (
-	"net/http"
 	"log"
+	"net/http"
+	"os"
 
-	model_redis "github.com/PtMK2/EatSnap/backend/model/redis"
 	"github.com/PtMK2/EatSnap/backend/model"
+	model_redis "github.com/PtMK2/EatSnap/backend/model/redis"
 	"github.com/gin-gonic/gin"
 )
 
@@ -30,8 +31,6 @@ func renderPage(c *gin.Context, templateName string) {
 			return
 		}
 	}
-	
-	c.HTML(http.StatusOK, templateName, gin.H{
-		"user": user,
-	})
+
+	c.HTML(http.StatusOK, templateName, gin.H{"user": user})
 }
