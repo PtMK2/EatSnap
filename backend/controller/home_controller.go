@@ -2,7 +2,9 @@ package controller
 
 import (
 	"net/http"
+	"log"
 
+	model_redis "github.com/PtMK2/EatSnap/backend/model/redis"
 	"github.com/PtMK2/EatSnap/backend/model"
 	"github.com/gin-gonic/gin"
 )
@@ -19,10 +21,16 @@ func renderPage(c *gin.Context, templateName string) {
 	user := model.User{}
 	cookieKey := os.Getenv("LOGIN_USER_ID_KEY")
 	userId := model_redis.GetSession(c, cookieKey)
-	if userId != nil {
-		user = model.GetOneUser(userId.(string))
-	}
 
+	if userId != nil {
+		user, err := model.GetOneUser(userId.(string))
+		if err != nil {
+			log.Println("Failed to get user:", err)
+			c.AbortWithError(http.StatusInternalServerError, err)
+			return
+		}
+	}
+	
 	c.HTML(http.StatusOK, templateName, gin.H{
 		"user": user,
 	})
