@@ -23,10 +23,9 @@ func GetRouter() *gin.Engine {
 	// こんな感じでルーティングを追加していく
 	//ただフロントがどうなっているかわからないのでコメントアウトしとく
 
-	router.GET("/", controller.GetHome)
-
 	loginCheckGroup := router.Group("/", sessionCheck())
 	{
+		loginCheckGroup.GET("/home", controller.GetHome)
 		loginCheckGroup.GET("/mypage", controller.GetMypage)
 		loginCheckGroup.GET("/logout", controller.GetLogout)
 		loginCheckGroup.GET("/map", controller.GetMapHome)
@@ -52,6 +51,8 @@ func sessionCheck() gin.HandlerFunc {
 			c.Abort() // これがないと続けて処理されてしまう
 		} else {
 			c.Set(sessionKey, LoginInfo.UserId) // ユーザidをセット
+			log.Println("セッションをセット。")
+			log.Println(session)
 			c.Next()
 		}
 		log.Println("ログインチェック終わり")

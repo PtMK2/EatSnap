@@ -55,6 +55,7 @@ func PostLoginHub(c *gin.Context, id, pw string) {
 	session := sessions.Default(c)
 	session.Set("user_id", id)
 	session.Save()
+	log.Println("セッションセーブ")
 	c.HTML(http.StatusOK, "mypage.html", gin.H{"user": user})
 }
 
