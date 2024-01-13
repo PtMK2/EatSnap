@@ -26,11 +26,12 @@ func GetRouter() *gin.Engine {
 	loginCheckGroup := router.Group("/", sessionCheck())
 	{
 		loginCheckGroup.GET("/home", controller.GetHome)
-		loginCheckGroup.GET("/mypage", controller.GetMypage)
-		loginCheckGroup.GET("/logout", controller.GetLogout)
-		loginCheckGroup.GET("/map", controller.GetMapHome)
+
 	}
 
+	router.GET("/mypage", controller.GetMypage)
+	router.GET("/logout", controller.GetLogout)
+	router.GET("/map", controller.GetMapHome)
 	router.GET("/signup", controller.GetSignup)
 	router.POST("/signup", controller.PostSignup)
 	router.GET("/login", controller.GetLogin)
