@@ -18,10 +18,12 @@ var sessionKey = "user_id" // セッションキーを変数として定義
 func GetRouter() *gin.Engine {
 	router := gin.Default()
 	router.LoadHTMLGlob("view/*.html")
-	store := cookie.NewStore([]byte("select"))
+	store := cookie.NewStore([]byte("secret"))
 	router.Use(sessions.Sessions("mysession", store))
-	// こんな感じでルーティングを追加していく
-	//ただフロントがどうなっているかわからないのでコメントアウトしとく
+	store.Options(sessions.Options{
+		MaxAge: 3600,
+		Secure: true, // 暗号化を有効にする
+	})
 
 	loginCheckGroup := router.Group("/", sessionCheck())
 	{
