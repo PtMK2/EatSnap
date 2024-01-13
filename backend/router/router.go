@@ -31,13 +31,11 @@ func GetRouter() *gin.Engine {
 		loginCheckGroup.GET("/logout", controller.GetLogout)
 		loginCheckGroup.GET("/map", controller.GetMapHome)
 	}
-	logoutCheckGroup := router.Group("/")
-	{
-		logoutCheckGroup.GET("/signup", controller.GetSignup)
-		logoutCheckGroup.POST("/signup", controller.PostSignup)
-		logoutCheckGroup.GET("/login", controller.GetLogin)
-		logoutCheckGroup.POST("/login", controller.PostLogin)
-	}
+
+	router.GET("/signup", controller.GetSignup)
+	router.POST("/signup", controller.PostSignup)
+	router.GET("/login", controller.GetLogin)
+	router.POST("/login", controller.PostLogin)
 
 	return router
 }
@@ -45,14 +43,15 @@ func GetRouter() *gin.Engine {
 func sessionCheck() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		session := sessions.Default(c)
-		LoginInfo.UserId = session.Get("sessionKey")
+		LoginInfo.UserId = session.Get(sessionKey)
+		// セッションがない場合、ログインフォームをだす
 		if LoginInfo.UserId == nil {
 			log.Println(session)
 			log.Println("ログインしていません")
 			c.Redirect(http.StatusMovedPermanently, "/login")
-			c.Abort()
+			c.Abort() // これがないと続けて処理されてしまう
 		} else {
-			c.Set("sessionKey", LoginInfo.UserId)
+			c.Set(sessionKey, LoginInfo.UserId) // ユーザidをセット
 			c.Next()
 		}
 		log.Println("ログインチェック終わり")
