@@ -56,7 +56,14 @@ func PostLoginHub(c *gin.Context, id, pw string) {
 	session.Set("user_id", id)
 	session.Save()
 	log.Println("セッションセーブ")
-	c.HTML(http.StatusOK, "mypage.html", gin.H{"user": user})
+
+	userID := session.Get("user_id")
+
+	if userID != nil {
+		user.UserId = userID.(string)
+	}
+
+	c.HTML(http.StatusOK, "mypage.html", gin.H{"user_id": user.UserId})
 }
 
 func GetLogout(c *gin.Context) {

@@ -46,8 +46,8 @@ func sessionCheck() gin.HandlerFunc {
 		// セッションがない場合、ログインフォームをだす
 		if LoginInfo.UserId == nil {
 			log.Println(session)
-			log.Println("ログインしていません")
 			c.Redirect(http.StatusMovedPermanently, "/login")
+			log.Println("ログインしていません")
 			c.Abort() // これがないと続けて処理されてしまう
 		} else {
 			c.Set(sessionKey, LoginInfo.UserId) // ユーザidをセット
