@@ -6,33 +6,38 @@ import (
 
 	"github.com/PtMK2/EatSnap/backend/crypto"
 	"github.com/PtMK2/EatSnap/backend/database"
-	"gorm.io/gorm"
 )
 
 type User struct {
-	gorm.Model
-	UserId   string
-	Password string
+	// gorm.Model
+	// ID       uint `gorm:"primaryKey"`
+	UserId   string `gorm:"column:user_id;type:varchar(191)"`
+	UserPass string `gorm:"column:user_pass;type:varchar(191)"`
+	UserName string `gorm:"column:user_name;type:varchar(191)"`
+	UserMail string `gorm:"column:user_mail;type:varchar(191)"`
 }
 
 // func init() {
 // 	database.DB.Set("gorm:table_options", "ENGINE = InnoDB").AutoMigrate(User{})
+// 	db := database.DB
+// 	db.Set("gorm:table_options", "ENGINE=InnoDB")
+// 	db.AutoMigrate(&User{})
 // }
 
 func SetupDB() {
-    db := database.DB
-    db.Set("gorm:table_options", "ENGINE=InnoDB")
-    db.AutoMigrate(&User{})
+	db := database.DB
+	db.Set("gorm:table_options", "ENGINE=InnoDB")
+	db.AutoMigrate(&User{})
 }
 
 func (u *User) LoggedIn() bool {
-	return u.ID != 0
+	return u.UserId != ""
 }
 
-func Signup(userId, password string) (*User, error) {
+func Signup(userId, password, username, usermail string) (*User, error) {
 	user := User{}
 	database.DB.Where("user_id = ?", userId).First(&user)
-	if user.ID != 0 {
+	if user.UserId != "" {
 		err := errors.New("同一名のUserIdが既に登録されています。")
 		fmt.Println(err)
 		return nil, err
@@ -43,25 +48,38 @@ func Signup(userId, password string) (*User, error) {
 		fmt.Println("パスワード暗号化中にエラーが発生しました。：", err)
 		return nil, err
 	}
-	user = User{UserId: userId, Password: encryptPw}
+
+	user = User{UserId: userId, UserPass: encryptPw, UserName: username, UserMail: usermail}
+	fmt.Println(user.UserName)
 	database.DB.Create(&user)
 	return &user, nil
 }
 
-func Login(userId, password string) (*User, error) {
+func Login(id, password string) (*User, error) {
 	user := User{}
-	database.DB.Where("user_id = ?", userId).First(&user)
-	if user.ID == 0 {
-		err := errors.New("UserIdが一致するユーザーが存在しません。")
+	database.DB.Where("user_id = ?", id).First(&user)
+	if user.UserId == "" {
+		err := errors.New("メールアドレス又はパスワードが違います。")
 		fmt.Println(err)
 		return nil, err
 	}
 
-	err := crypto.CompareHashAndPassword(user.Password, password)
+	err := crypto.CompareHashAndPassword(user.UserPass, password)
 	if err != nil {
-		fmt.Println("パスワードが一致しませんでした。：", err)
+		fmt.Println("ID又はパスワードが違います。", err)
 		return nil, err
 	}
 
+	return &user, nil
+}
+
+func GetOneUser(userId string) (*User, error) {
+	user := User{}
+	database.DB.Where("user_id = ?", userId).First(&user)
+	if user.UserId != "" {
+		err := errors.New("子のユーザーIDは使用されていません。")
+		fmt.Println(err)
+		return nil, err
+	}
 	return &user, nil
 }

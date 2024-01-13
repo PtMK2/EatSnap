@@ -1,14 +1,14 @@
 package main
 
 import (
-    "github.com/PtMK2/EatSnap/backend/database"
+	"github.com/PtMK2/EatSnap/backend/database"
 	"github.com/PtMK2/EatSnap/backend/model"
 	"github.com/PtMK2/EatSnap/backend/router"
 )
 
 func main() {
 	// データベースに接続
-    database.ConnectDB()
+	database.ConnectDB()
 
 	// gorm.DBインスタンスに依存する操作を行う
 	model.SetupDB()
@@ -16,4 +16,3 @@ func main() {
 	router := router.GetRouter()
 	router.Run(":8080")
 }
-
