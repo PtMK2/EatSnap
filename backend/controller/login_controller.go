@@ -72,5 +72,5 @@ func GetLogout(c *gin.Context) {
 	session.Clear()
 	log.Println("クリア処理")
 	session.Save()
-	c.Redirect(http.StatusFound, "/")
+	c.Redirect(http.StatusFound, "/login")
 }
