@@ -55,10 +55,10 @@ func Signup(userId, password, username, usermail string) (*User, error) {
 	return &user, nil
 }
 
-func Login(mail, password string) (*User, error) {
+func Login(id, password string) (*User, error) {
 	user := User{}
-	database.DB.Where("user_id = ?", mail).First(&user)
-	if user.UserMail == "" {
+	database.DB.Where("user_id = ?", id).First(&user)
+	if user.UserId == "" {
 		err := errors.New("メールアドレス又はパスワードが違います。")
 		fmt.Println(err)
 		return nil, err
@@ -66,7 +66,7 @@ func Login(mail, password string) (*User, error) {
 
 	err := crypto.CompareHashAndPassword(user.UserPass, password)
 	if err != nil {
-		fmt.Println("メールアドレス又はパスワードが違います。", err)
+		fmt.Println("ID又はパスワードが違います。", err)
 		return nil, err
 	}
 

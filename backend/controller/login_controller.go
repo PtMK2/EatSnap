@@ -24,16 +24,29 @@ func PostSignup(c *gin.Context) {
 		return
 	}
 	// c.HTML(http.StatusOK, "home.html", gin.H{"user": user})
-	PostLogin(c, id, pw)
+	PostLoginHub(c, id, pw)
 }
 
 func GetLogin(c *gin.Context) {
 	c.HTML(http.StatusOK, "login.html", nil)
 }
 
-func PostLogin(c *gin.Context, id, pw string) {
-	// id := c.PostForm("user_id")
-	// pw := c.PostForm("password")
+func PostLogin(c *gin.Context) {
+	id := c.PostForm("user_id")
+	pw := c.PostForm("password")
+	PostLoginHub(c, id, pw)
+	// user, err := model.Login(id, pw)
+	// if err != nil {
+	// 	c.Redirect(301, "/login")
+	// 	return
+	// }
+	// session := sessions.Default(c)
+	// session.Set("user_id", id)
+	// session.Save()
+	// c.HTML(http.StatusOK, "mypage.html", gin.H{"user": user})
+}
+
+func PostLoginHub(c *gin.Context, id, pw string) {
 	user, err := model.Login(id, pw)
 	if err != nil {
 		c.Redirect(301, "/login")
