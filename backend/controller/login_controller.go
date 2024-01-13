@@ -6,6 +6,7 @@ import (
 
 	"github.com/PtMK2/EatSnap/backend/model"
 	model_redis "github.com/PtMK2/EatSnap/backend/model/redis"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,8 +24,7 @@ func PostSignup(c *gin.Context) {
 		c.Redirect(301, "/signup")
 		return
 	}
-	cookieKey := os.Getenv("LOGIN_USER_ID_KEY")
-	model_redis.NewSession(c, cookieKey, user.UserId)
+
 	c.HTML(http.StatusOK, "home.html", gin.H{"user": user})
 }
 
@@ -33,16 +33,16 @@ func GetLogin(c *gin.Context) {
 }
 
 func PostLogin(c *gin.Context) {
-	mail := c.PostForm("user_mail")
+	id := c.PostForm("user_id")
 	pw := c.PostForm("password")
-
-	user, err := model.Login(mail, pw)
+	user, err := model.Login(id, pw)
 	if err != nil {
 		c.Redirect(301, "/login")
 		return
 	}
-	cookieKey := os.Getenv("LOGIN_USER_ID_KEY")
-	model_redis.NewSession(c, cookieKey, user.UserId)
+	session := sessions.Default(c)
+	session.Set("user_id", id)
+	session.Save()
 	c.HTML(http.StatusOK, "mypage.html", gin.H{"user": user})
 }
 
