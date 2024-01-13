@@ -14,11 +14,11 @@ func GetSignup(c *gin.Context) {
 }
 
 func PostSignup(c *gin.Context) {
-	id := c.PostForm("user_id")
-	pw := c.PostForm("password")
 	name := c.PostForm("user_name")
+	id := c.PostForm("user_id")
 	mail := c.PostForm("user_mail")
-	_, err := model.Signup(id, pw, name, mail)
+	pw := c.PostForm("password")
+	_, err := model.Signup(name, id, mail, pw)
 	if err != nil {
 		c.Redirect(301, "/signup")
 		return
