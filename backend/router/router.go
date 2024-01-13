@@ -17,6 +17,15 @@ var sessionKey = "user_id" // セッションキーを変数として定義
 
 func GetRouter() *gin.Engine {
 	router := gin.Default()
+
+	// CORS対応
+	router.Use(func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "localhost:3000")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		c.Next()
+	})
+
 	router.LoadHTMLGlob("view/*.html")
 	store := cookie.NewStore([]byte("secret"))
 	router.Use(sessions.Sessions("mysession", store))
