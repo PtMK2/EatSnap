@@ -1,5 +1,6 @@
 <h1>TOP</h1>
-{{ if .user.UserId }}
+{{ if .user_id }}
+<p>{{.user_id}}</p>
 <a href="/mypage">マイページ</a>
 <a href="/logout">ログアウト</a>
 {{ else }}
