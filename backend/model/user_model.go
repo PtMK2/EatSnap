@@ -11,10 +11,10 @@ import (
 type User struct {
 	// gorm.Model
 	// ID       uint `gorm:"primaryKey"`
-	UserId   string `gorm:"column:user_id"`
-	UserPass string `gorm:"column:user_pass"`
-	UserName string `gorm:"column:user_name"`
-	UserMail string `gorm:"column:user_mail"`
+	UserId   string `gorm:"column:user_id;type:varchar(191)"`
+	UserPass string `gorm:"column:user_pass;type:varchar(191)"`
+	UserName string `gorm:"column:user_name;type:varchar(191)"`
+	UserMail string `gorm:"column:user_mail;type:varchar(191)"`
 }
 
 // func init() {
