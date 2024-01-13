@@ -1,14 +1,27 @@
 ﻿"use client"
-
+import axios from 'axios';
 export default function App() {
 
-	const handleSubmit = (event: { preventDefault: () => void; }) => {
+	const handleSubmit = async (event: { preventDefault: () => void; }) => {
 		// ここでサーバーに送信する処理を書くとか？
 		event.preventDefault();
 		console.log('Form submitted!');
 		const formData = new FormData(document.getElementById('f') as HTMLFormElement);
 		// (document.getElementById('f') as HTMLFormElement).submit();
 		console.log(Array.from(formData.entries()));
+
+		//サーバーに送信処理 by林田　動くかわからない
+		try {
+			const response = await axios.post('http://localhost:8080/signup', formData, {
+				//ここの処理は謎です。 by林田
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			});
+			console.log(response.data);
+		} catch (error) {
+			console.error(error);
+		}
 	};
 	return (
 		<>
