@@ -4,9 +4,11 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/PtMK2/EatSnap/backend/controller"
-	model_redis "github.com/PtMK2/EatSnap/backend/model/redis"
+	"github.com/gin-contrib/sessions"
+   	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
+	"github.com/PtMK2/EatSnap/backend/controller"
+	
 )
 
 func GetRouter() *gin.Engine {
@@ -47,28 +49,3 @@ func GetRouter() *gin.Engine {
 	return router
 }
 
-func checkLogin() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		cookieKey := os.Getenv("LOGIN_USER_ID_KEY")
-		id := model_redis.GetSession(c, cookieKey)
-		if id == nil {
-			c.Redirect(http.StatusFound, "/login")
-			c.Abort()
-		} else {
-			c.Next()
-		}
-	}
-}
-
-func checkLogout() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		cookieKey := os.Getenv("LOGIN_USER_ID_KEY")
-		id := model_redis.GetSession(c, cookieKey)
-		if id != nil {
-			c.Redirect(http.StatusFound, "/")
-			c.Abort()
-		} else {
-			c.Next()
-		}
-	}
-}
