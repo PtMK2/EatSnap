@@ -31,7 +31,7 @@ func GetRouter() *gin.Engine {
 		loginCheckGroup.GET("/logout", controller.GetLogout)
 		loginCheckGroup.GET("/map", controller.GetMapHome)
 	}
-	logoutCheckGroup := router.Group("/", sessionCheck())
+	logoutCheckGroup := router.Group("/")
 	{
 		logoutCheckGroup.GET("/signup", controller.GetSignup)
 		logoutCheckGroup.POST("/signup", controller.PostSignup)
