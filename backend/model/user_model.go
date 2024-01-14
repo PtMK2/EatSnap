@@ -34,7 +34,7 @@ func (u *User) LoggedIn() bool {
 	return u.UserId != ""
 }
 
-func Signup(userId, password, username, usermail string) (*User, error) {
+func Signup(username, userId, usermail, password string) (*User, error) {
 	user := User{}
 	database.DB.Where("user_id = ?", userId).First(&user)
 	if user.UserId != "" {

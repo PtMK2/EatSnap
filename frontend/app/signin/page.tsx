@@ -17,12 +17,33 @@ export default function App() {
         console.log(formValues);
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log("submit");
         setFormErrors(validate(formValues));
         setIsSubmit(true);
-    }
+    
+        if (Object.keys(formErrors).length === 0) {
+            try {
+                const response = await axios.post('http://localhost:8080/login', {
+                    user_id: formValues.id,
+                    password: formValues.password
+                }, {
+                    withCredentials: true // クッキーを使用する場合に必要
+                });
+    
+                if (response.data.success) {
+                    // ログイン成功
+                    console.log("ログイン成功");
+                } else {
+                    // ログイン失敗
+                    console.log("ログイン失敗");
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
 
     const validate = (values: { id?: string, password?: string }) => {
         const errors: { id?: string, password?: string } = {};
@@ -76,12 +97,12 @@ export default function App() {
                 <div className="uiForm">
                     <div className="formField">
                         <label>ID</label>
-                        <input type="text" placeholder="ID" name="id" value={id} onChange={(e) => handleChange(e)} suppressHydrationWarning={true} />
+                        <input type="text" placeholder="ID" name="id" value={formValues.id} onChange={(e) => handleChange(e)} suppressHydrationWarning={true} />
                         <p className="errorMsg">{formErrors.id}</p> {/* Display the ID error message */}
                     </div>
                     <div className="formField">
                         <label>パスワード</label>
-                        <input type="password" placeholder="パスワード" name="password" value={password} onChange={(e) => handleChange(e)} suppressHydrationWarning={true} />
+                        <input type="password" placeholder="パスワード" name="password" value={formValues.password} onChange={(e) => handleChange(e)} suppressHydrationWarning={true} />
                         <p className="errorMsg">{formErrors.password}</p>
                     </div>
                     <button className="submitButton" type="submit">ログイン</button>
