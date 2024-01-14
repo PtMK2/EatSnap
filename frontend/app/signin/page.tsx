@@ -3,8 +3,9 @@ import axios from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 export default function App() {
+    const initialValues: { id: string; password: string } = { id: "", password: "" };
+const [formValues, setFormValues] = useState<{ id: string; password: string }>(initialValues);
 
-    const [formValues, setFormValues] = useState<{ id: string; password: string }>();
     const [formErrors, setFormErrors] = useState({ id: "", password: "" });
     const [isSubmit, setIsSubmit] = useState(false);
     const [loginSuccess, setLoginSuccess] = useState(false);
@@ -40,20 +41,20 @@ export default function App() {
         }
     }
 
-    const validate = (values: { id: string, password: string }) => {
+    const validate = (values: { id?: string, password?: string }) => {
         const errors: { id?: string, password?: string } = {};
         const regexId = /^[a-zA-Z0-9]+$/;
         const regexPassword = /^[a-zA-Z0-9]+$/;
-    
-        if (!values.id.trim()) {
+
+        if (!values.id?.trim()) {
             errors.id = "IDを入力してください";
         } else if (!regexId.test(values.id)) {
             errors.id = "IDは半角英数字で入力してください";
         } else {
             errors.id = "";
         }
-    
-        if (!values.password.trim()) {
+
+        if (!values.password?.trim()) {
             errors.password = "パスワードを入力してください";
         } else if (values.password.length < 8 || values.password.length > 16) {
             errors.password = "パスワードは8文字以上16文字以下で入力してください";
@@ -62,7 +63,7 @@ export default function App() {
         } else {
             errors.password = "";
         }
-    
+
         return errors;
     };
 
