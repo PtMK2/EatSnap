@@ -1,93 +1,79 @@
 "use client"
-import "./signin.css"
+
+import "./signin.css";
 import axios from 'axios';
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function App() {
-    const [id, setId] = useState("");
-    const [password, setPassword] = useState("");
-    const initialValues = {id:"",password:""};
-    const [formValues,setFormValues] = useState(initialValues);
-    const [formErrors,setFormErrors] = useState<{ id?: string, password?: string }>({});
-    const [isSubmit,setIsSubmit] = useState(false);
+    const router = useRouter();
+    const initialValues: { id: string; password: string } = { id: "", password: "" };
+    const [formValues, setFormValues] = useState<{ id: string; password: string }>(initialValues);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name,value} = e.target;
-        setFormValues({...formValues,[name]:value});
-        console.log(formValues);
+    const [formErrors, setFormErrors] = useState({ id: "", password: "" });
+    const [isSubmit, setIsSubmit] = useState(false);
+    const [loginSuccess, setLoginSuccess] = useState(false);
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormValues((prevValues) => ({
+            ...prevValues,
+            [name]: value,
+        }));
     }
-
+    
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+
         e.preventDefault();
-        console.log("submit");
         setFormErrors(validate(formValues));
         setIsSubmit(true);
-    
+      
         if (Object.keys(formErrors).length === 0) {
             try {
-                const response = await axios.post('http://localhost:8080/login', {
-                    user_id: formValues.id,
-                    password: formValues.password
-                }, {
-                    withCredentials: true // クッキーを使用する場合に必要
-                });
-    
+                const response = await axios.post('http://localhost:8080/login', formValues);
+                console.log(response.data);
+                if (response.data.redirect) {
+                    // バックエンドからのリダイレクト指示に従う
+                    router.push(response.data.redirect);
+                  }
                 if (response.data.success) {
                     // ログイン成功
-                    console.log("ログイン成功");
+                    setLoginSuccess(true);
                 } else {
                     // ログイン失敗
-                    console.log("ログイン失敗");
+                    setLoginSuccess(false);
                 }
             } catch (error) {
-                console.error(error);
+                console.error('Error:', error);
+                // エラー処理
             }
         }
-    };
+    }
 
     const validate = (values: { id?: string, password?: string }) => {
-        const errors: { id?: string, password?: string } = {};
+        const errors: { id: string, password: string } = { id: "", password: "" };
         const regexId = /^[a-zA-Z0-9]+$/;
         const regexPassword = /^[a-zA-Z0-9]+$/;
 
-        if(!values.id){
+        if (!values.id?.trim()) {
             errors.id = "IDを入力してください";
-        }else if(!regexId.test(values.id)){
+        } else if (!regexId.test(values.id)) {
             errors.id = "IDは半角英数字で入力してください";
-        }else{
+        } else {
             errors.id = "";
         }
-        if(!values.password){
+
+        if (!values.password?.trim()) {
             errors.password = "パスワードを入力してください";
-        }else if(values.password.length < 8){
+        } else if (values.password.length < 8 || values.password.length > 16) {
             errors.password = "パスワードは8文字以上16文字以下で入力してください";
-        }else if(values.password.length > 16){
-            errors.password = "パスワードは8文字以上16文字以下で入力してください";     
-        }else if(!regexPassword.test(values.password)){
+        } else if (!regexPassword.test(values.password)) {
             errors.password = "パスワードは半角英数字で入力してください";
-        }else{
+        } else {
             errors.password = "";
         }
+
         return errors;
-    }
-
-    /*const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        const response = await axios.post('http://localhost:8080/login', {
-            id: id,
-            password: password
-        });
-
-        if (response.data.success) {
-            // ログイン成功
-            console.log("ログイン成功");
-        } else {
-            // ログイン失敗
-            console.log("ログイン失敗");
-        }
-    }
-    */
+    };
 
     return (
         <div className="formContainer" >

@@ -23,6 +23,7 @@ func GetRouter() *gin.Engine {
 
 	router.LoadHTMLGlob("view/*.html")
 	store := cookie.NewStore([]byte("secret"))
+	router.Use(corsMiddleware())
 	router.Use(sessions.Sessions("mysession", store))
 	store.Options(sessions.Options{
 		MaxAge: 3600,

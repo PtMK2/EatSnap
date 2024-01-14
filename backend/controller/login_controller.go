@@ -10,15 +10,17 @@ import (
 )
 
 func GetSignup(c *gin.Context) {
-	c.HTML(http.StatusOK, "signup.html", nil)
+	// c.HTML(http.StatusOK, "signup.html", nil)
+	c.JSON(http.StatusOK, gin.H{"redirect": "/signup"})
 }
 
 func PostSignup(c *gin.Context) {
-	name := c.PostForm("user_name")
-	id := c.PostForm("user_id")
-	mail := c.PostForm("user_mail")
+	id := c.PostForm("id")
 	pw := c.PostForm("password")
-	_, err := model.Signup(name, id, mail, pw)
+	name := c.PostForm("name")
+	mail := c.PostForm("mail")
+	_, err := model.Signup(id, pw, name, mail)
+
 	if err != nil {
 		c.Redirect(301, "/signup")
 		return
@@ -28,11 +30,12 @@ func PostSignup(c *gin.Context) {
 }
 
 func GetLogin(c *gin.Context) {
-	c.HTML(http.StatusOK, "login.html", nil)
+	// c.HTML(http.StatusOK, "login.html", nil)
+	c.JSON(http.StatusOK, gin.H{"redirect": "/signin"})
 }
 
 func PostLogin(c *gin.Context) {
-	id := c.PostForm("user_id")
+	id := c.PostForm("id")
 	pw := c.PostForm("password")
 	PostLoginHub(c, id, pw)
 	// user, err := model.Login(id, pw)
@@ -63,7 +66,8 @@ func PostLoginHub(c *gin.Context, id, pw string) {
 		user.UserId = userID.(string)
 	}
 
-	c.HTML(http.StatusOK, "mypage.html", gin.H{"user_id": user.UserId})
+	// c.HTML(http.StatusOK, "mypage.html", gin.H{"user_id": user.UserId})
+	c.JSON(http.StatusOK, gin.H{"redirect": "/mappage"})
 }
 
 func GetLogout(c *gin.Context) {

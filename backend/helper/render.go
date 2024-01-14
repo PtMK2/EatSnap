@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RenderPage(c *gin.Context, templateName string) {
+func RenderPage(c *gin.Context, redirectname string) {
 	user := &model.User{}
 	session := sessions.Default(c)
 	userID := session.Get("user_id")
@@ -16,5 +16,5 @@ func RenderPage(c *gin.Context, templateName string) {
 	if userID != nil {
 		user.UserId = userID.(string)
 	}
-	c.HTML(http.StatusOK, templateName, gin.H{"user_id": user.UserId})
+	c.JSON(http.StatusOK, gin.H{"redirect": redirectname, "user_id": user.UserId})
 }
