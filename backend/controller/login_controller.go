@@ -10,7 +10,8 @@ import (
 )
 
 func GetSignup(c *gin.Context) {
-	c.HTML(http.StatusOK, "signup.html", nil)
+	// c.HTML(http.StatusOK, "signup.html", nil)
+	c.JSON(http.StatusOK, gin.H{"redirect": "/signup"})
 }
 
 func PostSignup(c *gin.Context) {
@@ -28,7 +29,8 @@ func PostSignup(c *gin.Context) {
 }
 
 func GetLogin(c *gin.Context) {
-	c.HTML(http.StatusOK, "login.html", nil)
+	// c.HTML(http.StatusOK, "login.html", nil)
+	c.JSON(http.StatusOK, gin.H{"redirect": "/signin"})
 }
 
 func PostLogin(c *gin.Context) {
@@ -63,7 +65,8 @@ func PostLoginHub(c *gin.Context, id, pw string) {
 		user.UserId = userID.(string)
 	}
 
-	c.HTML(http.StatusOK, "mypage.html", gin.H{"user_id": user.UserId})
+	// c.HTML(http.StatusOK, "mypage.html", gin.H{"user_id": user.UserId})
+	c.JSON(http.StatusOK, gin.H{"redirect": "/mappage"})
 }
 
 func GetLogout(c *gin.Context) {
