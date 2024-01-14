@@ -1,5 +1,6 @@
 "use client"
 import GoogleMapComponent from '@/components/GoogleMap';
+import "./mappages.css"
 
 const Home = () => {
   return (

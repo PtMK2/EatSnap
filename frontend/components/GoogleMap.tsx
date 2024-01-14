@@ -1,28 +1,44 @@
 "use client"
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { useState, useEffect } from 'react';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const containerStyle = {
-  width: '400px',
-  height: '400px',
-};
-
-const center = {
-  lat: -3.745,
-  lng: -38.523,
+  width: '100%',
+  height: '1200px',
 };
 
 const GoogleMapComponent = () => {
-  console.log(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
-    return (
-        <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? ''}>
-            <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={center}
-                zoom={10}
-            />
-        </LoadScript>
-    );
+  const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
+
+  useEffect(() => {
+    // ユーザーの現在の位置を取得
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setCurrentLocation({ lat: latitude, lng: longitude });
+        },
+        (error) => {
+          console.error('Error getting current location:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  }, []); // この Effect は最初のレンダリング時にのみ実行されます
+
+  return (
+    <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? ''}>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={currentLocation}
+        zoom={15}
+      >
+        {/* マーカーで現在位置を表示 */}
+        <Marker position={currentLocation} />
+      </GoogleMap>
+    </LoadScript>
+  );
 };
 
 export default GoogleMapComponent;
-
