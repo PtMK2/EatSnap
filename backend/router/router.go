@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	sessioninfo "github.com/PtMK2/EatSnap/backend/sessioninfo"
+	sessioninfo "github.com/PtMK2/EatSnap/backend/Sessioninfo"
 
 	"github.com/PtMK2/EatSnap/backend/controller"
 	"github.com/gin-contrib/sessions"
@@ -19,10 +19,21 @@ func GetRouter() *gin.Engine {
 	router := gin.Default()
 
 	// CORS対応
+	// router.Use(func(c *gin.Context) {
+	// 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	// 	c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+	// 	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	// 	c.Next()
+	// })
 	router.Use(func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true") // クッキーを使用する場合に必要
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(http.StatusNoContent)
+			return
+		}
 		c.Next()
 	})
 
