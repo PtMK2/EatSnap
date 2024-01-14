@@ -1,16 +1,18 @@
+"use client"
+
 import "./signin.css";
 import axios from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 export default function App() {
+    const router = useRouter();
     const initialValues: { id: string; password: string } = { id: "", password: "" };
-const [formValues, setFormValues] = useState<{ id: string; password: string }>(initialValues);
+    const [formValues, setFormValues] = useState<{ id: string; password: string }>(initialValues);
 
     const [formErrors, setFormErrors] = useState({ id: "", password: "" });
     const [isSubmit, setIsSubmit] = useState(false);
     const [loginSuccess, setLoginSuccess] = useState(false);
-
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormValues((prevValues) => ({
@@ -23,7 +25,7 @@ const [formValues, setFormValues] = useState<{ id: string; password: string }>(i
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmit(true);
-        const router = useRouter();
+        
         if (Object.keys(formErrors).length === 0) {
             try {
                 const response = await axios.post('http://localhost:8080/login', formValues);
