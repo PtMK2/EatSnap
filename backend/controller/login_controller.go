@@ -34,7 +34,7 @@ func GetLogin(c *gin.Context) {
 }
 
 func PostLogin(c *gin.Context) {
-	id := c.PostForm("user_id")
+	id := c.PostForm("id")
 	pw := c.PostForm("password")
 	PostLoginHub(c, id, pw)
 	// user, err := model.Login(id, pw)
