@@ -42,7 +42,7 @@ const [formValues, setFormValues] = useState<{ id: string; password: string }>(i
     }
 
     const validate = (values: { id?: string, password?: string }) => {
-        const errors: { id?: string, password?: string } = {};
+        const errors: { id: string, password: string } = { id: "", password: "" };
         const regexId = /^[a-zA-Z0-9]+$/;
         const regexPassword = /^[a-zA-Z0-9]+$/;
 
