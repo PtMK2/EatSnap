@@ -19,23 +19,7 @@ func GetRouter() *gin.Engine {
 	router := gin.Default()
 
 	// CORS対応
-	// router.Use(func(c *gin.Context) {
-	// 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-	// 	c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-	// 	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-	// 	c.Next()
-	// })
-	router.Use(func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true") // クッキーを使用する場合に必要
-		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(http.StatusNoContent)
-			return
-		}
-		c.Next()
-	})
+	router.Use(corsMiddleware())
 
 	router.LoadHTMLGlob("view/*.html")
 	store := cookie.NewStore([]byte("secret"))
@@ -79,5 +63,20 @@ func sessionCheck() gin.HandlerFunc {
 			c.Next()
 		}
 		log.Println("ログインチェック終わり")
+	}
+}
+
+func corsMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true") // クレデンシャルを許可
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(http.StatusNoContent)
+			return
+		}
+		c.Next()
 	}
 }
