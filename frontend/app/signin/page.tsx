@@ -2,7 +2,7 @@
 import "./signin.css"
 import axios from 'axios';
 import { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import Link from 'next/link';
 
 export default function App() {
     const initialValues = {id:"",password:""};
@@ -67,7 +67,7 @@ export default function App() {
                     </div>
                     <button className="submitButton" type="submit">ログイン</button>
                     <button className="newRegistButton" type="button">新規登録</button>
-                    <Link to="/forget" className="forgetButton">ID パスワードを<br></br>忘れた方はこちら</Link> {/* Add Link component */}
+                    <Link href="/forget" className="forgetButton">ID パスワードを<br />忘れた方はこちら</Link>
                     {Object.keys(formErrors).length === 0 && isSubmit && <div className="successMsg">ログイン成功</div>}
                 </div>
             </form>
