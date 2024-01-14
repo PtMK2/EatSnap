@@ -20,12 +20,13 @@ export default function App() {
             [name]: value,
         }));
     }
+    
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmit(true);
-        
+      
         if (Object.keys(formErrors).length === 0) {
             try {
                 const response = await axios.post('http://localhost:8080/login', formValues);
@@ -83,7 +84,7 @@ export default function App() {
                     <div className="formField">
                         <label>ID</label>
                         <input type="text" placeholder="ID" name="id" value={formValues.id} onChange={(e) => handleChange(e)} suppressHydrationWarning={true} />
-                        <p className="errorMsg">{formErrors.id}</p>
+                        <p className="errorMsg">{formErrors.id}</p> {/* Display the ID error message */}
                     </div>
                     <div className="formField">
                         <label>パスワード</label>

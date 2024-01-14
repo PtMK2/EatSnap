@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	sessioninfo "github.com/PtMK2/EatSnap/backend/sessioninfo"
+	sessioninfo "github.com/PtMK2/EatSnap/backend/Sessioninfo"
 
 	"github.com/PtMK2/EatSnap/backend/controller"
 	"github.com/gin-contrib/sessions"
@@ -17,6 +17,10 @@ var sessionKey = "user_id" // セッションキーを変数として定義
 
 func GetRouter() *gin.Engine {
 	router := gin.Default()
+
+	// CORS対応
+	router.Use(corsMiddleware())
+
 	router.LoadHTMLGlob("view/*.html")
 	store := cookie.NewStore([]byte("secret"))
 	router.Use(corsMiddleware())
@@ -68,6 +72,12 @@ func corsMiddleware() gin.HandlerFunc {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true") // クレデンシャルを許可
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(http.StatusNoContent)
+			return
+		}
 		c.Next()
 	}
 }

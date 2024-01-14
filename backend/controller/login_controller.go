@@ -20,6 +20,7 @@ func PostSignup(c *gin.Context) {
 	name := c.PostForm("name")
 	mail := c.PostForm("mail")
 	_, err := model.Signup(id, pw, name, mail)
+
 	if err != nil {
 		c.Redirect(301, "/signup")
 		return
