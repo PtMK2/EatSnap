@@ -6,5 +6,5 @@ import (
 )
 
 func GetMypage(c *gin.Context) {
-	helper.RenderPage(c, "mypage.html")
+	helper.RenderPage(c, "/mypage")
 }

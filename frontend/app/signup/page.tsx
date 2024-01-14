@@ -1,5 +1,6 @@
 ﻿"use client"
 import axios from 'axios';
+import { useRouter } from 'next/router';
 export default function App() {
 
 	const handleSubmit = async (event: { preventDefault: () => void; }) => {
@@ -9,7 +10,7 @@ export default function App() {
 		const formData = new FormData(document.getElementById('f') as HTMLFormElement);
 		// (document.getElementById('f') as HTMLFormElement).submit();
 		console.log(Array.from(formData.entries()));
-
+        const router = useRouter();
 		//サーバーに送信処理 by林田　動くかわからない
 		try {
 			const response = await axios.post('http://localhost:8080/signup', formData, {
@@ -18,6 +19,10 @@ export default function App() {
 					'Content-Type': 'multipart/form-data'
 				}
 			});
+            if (response.data.redirect) {
+                // バックエンドからのリダイレクト指示に従う
+                router.push(response.data.redirect);
+              }
 			console.log(response.data);
 		} catch (error) {
 			console.error(error);

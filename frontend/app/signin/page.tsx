@@ -1,6 +1,7 @@
 import "./signin.css";
 import axios from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function App() {
     const initialValues: { id: string; password: string } = { id: "", password: "" };
@@ -22,11 +23,15 @@ const [formValues, setFormValues] = useState<{ id: string; password: string }>(i
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmit(true);
-
+        const router = useRouter();
         if (Object.keys(formErrors).length === 0) {
             try {
                 const response = await axios.post('http://localhost:8080/login', formValues);
-
+                console.log(response.data);
+                if (response.data.redirect) {
+                    // バックエンドからのリダイレクト指示に従う
+                    router.push(response.data.redirect);
+                  }
                 if (response.data.success) {
                     // ログイン成功
                     setLoginSuccess(true);
