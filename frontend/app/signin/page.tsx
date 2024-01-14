@@ -2,10 +2,9 @@
 import "./signin.css"
 import axios from 'axios';
 import { useState } from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 export default function App() {
-    const [id, setId] = useState("");
-    const [password, setPassword] = useState("");
     const initialValues = {id:"",password:""};
     const [formValues,setFormValues] = useState(initialValues);
     const [formErrors,setFormErrors] = useState<{ id?: string, password?: string }>({});
@@ -50,24 +49,6 @@ export default function App() {
         return errors;
     }
 
-    /*const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        const response = await axios.post('http://localhost:8080/login', {
-            id: id,
-            password: password
-        });
-
-        if (response.data.success) {
-            // ログイン成功
-            console.log("ログイン成功");
-        } else {
-            // ログイン失敗
-            console.log("ログイン失敗");
-        }
-    }
-    */
-
     return (
         <div className="formContainer" >
             <form onSubmit={(e) => handleSubmit(e)}>
@@ -76,15 +57,17 @@ export default function App() {
                 <div className="uiForm">
                     <div className="formField">
                         <label>ID</label>
-                        <input type="text" placeholder="ID" name="id" value={id} onChange={(e) => handleChange(e)} suppressHydrationWarning={true} />
+                        <input type="text" placeholder="ID" name="id" value={formValues.id} onChange={(e) => handleChange(e)} suppressHydrationWarning={true} />
                         <p className="errorMsg">{formErrors.id}</p> {/* Display the ID error message */}
                     </div>
                     <div className="formField">
                         <label>パスワード</label>
-                        <input type="password" placeholder="パスワード" name="password" value={password} onChange={(e) => handleChange(e)} suppressHydrationWarning={true} />
+                        <input type="password" placeholder="パスワード" name="password" value={formValues.password} onChange={(e) => handleChange(e)} suppressHydrationWarning={true} />
                         <p className="errorMsg">{formErrors.password}</p>
                     </div>
                     <button className="submitButton" type="submit">ログイン</button>
+                    <button className="newRegistButton" type="button">新規登録</button>
+                    <Link to="/forget" className="forgetButton">ID パスワードを<br></br>忘れた方はこちら</Link> {/* Add Link component */}
                     {Object.keys(formErrors).length === 0 && isSubmit && <div className="successMsg">ログイン成功</div>}
                 </div>
             </form>

@@ -20,7 +20,8 @@
     "next-link": "^2.0.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-hook-form": "^7.49.3"
+    "react-hook-form": "^7.49.3",
+    "react-router-dom": "^6.21.2"
   },
   "devDependencies": {
     "@types/next": "^9.0.0",
