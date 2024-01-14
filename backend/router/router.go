@@ -19,6 +19,7 @@ func GetRouter() *gin.Engine {
 	router := gin.Default()
 	router.LoadHTMLGlob("view/*.html")
 	store := cookie.NewStore([]byte("secret"))
+	router.Use(corsMiddleware())
 	router.Use(sessions.Sessions("mysession", store))
 	store.Options(sessions.Options{
 		MaxAge: 3600,
@@ -59,5 +60,14 @@ func sessionCheck() gin.HandlerFunc {
 			c.Next()
 		}
 		log.Println("ログインチェック終わり")
+	}
+}
+
+func corsMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		c.Next()
 	}
 }
