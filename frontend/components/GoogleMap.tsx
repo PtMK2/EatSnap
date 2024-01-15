@@ -4,7 +4,7 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const containerStyle = {
   width: '100%',
-  height: '1200px',
+  height: 'calc(100vh - 40px)', // 40pxはフッターの高さ分を差し引いた高さ
 };
 
 const GoogleMapComponent = () => {
