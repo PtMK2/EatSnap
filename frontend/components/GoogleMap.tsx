@@ -1,4 +1,5 @@
 "use client"
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
@@ -9,6 +10,27 @@ const containerStyle = {
 
 const GoogleMapComponent = () => {
   const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
+  const mapOptions = {
+    disableDefaultUI: true, // デフォルトのUIコントロールを非表示にする
+  };
+
+  // ピンがクリックされたときの処理
+  const handleMarkerClick = async (placeId: any) => {
+    // 2. クリックされたピンの place_id を使用して、関連する shop_id を取得
+    try {
+      const response = await axios.get(`/api/getShopIdByPlaceId?placeId=${placeId}`);
+      const shopId = response.data.shopId;
+
+      // 3. 取得した shop_id を使用して、データベースの comments テーブルからコメントを取得
+      const commentsResponse = await axios.get(`/api/getCommentsByShopId?shopId=${shopId}`);
+      const comments = commentsResponse.data.comments;
+
+      // 4. 取得したコメントを画面に表示（実際の表示方法はアプリケーションによる）
+      console.log(comments);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   useEffect(() => {
     // ユーザーの現在の位置を取得
@@ -33,6 +55,7 @@ const GoogleMapComponent = () => {
         mapContainerStyle={containerStyle}
         center={currentLocation}
         zoom={15}
+        options={mapOptions} // マップオプションを適用
       >
         {/* マーカーで現在位置を表示 */}
         <Marker position={currentLocation} />

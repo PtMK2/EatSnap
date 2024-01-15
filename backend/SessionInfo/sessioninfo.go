@@ -1,4 +1,4 @@
-package sessioninfo
+package Sessioninfo
 
 type SessionInfo struct {
 	UserId interface{}

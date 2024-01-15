@@ -28,6 +28,9 @@ const Home = () => {
         <button className='footer-button'>行ってみたい</button>
       </footer>
     </div>
+
+
+
   );
 };
 
