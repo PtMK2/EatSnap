@@ -1,7 +1,8 @@
 ﻿"use client"
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 export default function App() {
-
+    const router = useRouter();
 	const handleSubmit = async (event: { preventDefault: () => void; }) => {
 		// ここでサーバーに送信する処理を書くとか？
 		event.preventDefault();
@@ -9,7 +10,6 @@ export default function App() {
 		const formData = new FormData(document.getElementById('f') as HTMLFormElement);
 		// (document.getElementById('f') as HTMLFormElement).submit();
 		console.log(Array.from(formData.entries()));
-
 		//サーバーに送信処理 by林田　動くかわからない
 		try {
 			const response = await axios.post('http://localhost:8080/signup', formData, {
@@ -18,6 +18,10 @@ export default function App() {
 					'Content-Type': 'multipart/form-data'
 				}
 			});
+            if (response.data.redirect) {
+                // バックエンドからのリダイレクト指示に従う
+                router.push(response.data.redirect);
+              }
 			console.log(response.data);
 		} catch (error) {
 			console.error(error);

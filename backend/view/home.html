@@ -1,0 +1,9 @@
+<h1>TOP</h1>
+{{ if .user_id }}
+<p>{{.user_id}}</p>
+<a href="/mypage">マイページ</a>
+<a href="/logout">ログアウト</a>
+{{ else }}
+<a href="/signup">会員登録</a>
+<a href="/login">ログイン</a>
+{{ end }}
