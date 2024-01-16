@@ -8,6 +8,20 @@ const containerStyle = {
   height: 'calc(100vh - 40px)', // 40pxはフッターの高さ分を差し引いた高さ
 };
 
+const mapStyles = [
+    {
+        // すべての風景を非表示
+        featureType: 'landscape',
+        stylers: [{ visibility: 'off' }]
+    },
+    {   
+        // 企業や店舗を表示します。
+        featureType: 'poi.business', 
+        stylers: [{ visibility: 'on' }]
+    }
+    
+  ];
+
 const GoogleMapComponent = () => {
   const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
   const mapOptions = {
@@ -55,7 +69,7 @@ const GoogleMapComponent = () => {
         mapContainerStyle={containerStyle}
         center={currentLocation}
         zoom={15}
-        options={mapOptions} // マップオプションを適用
+        options={{ ...mapOptions, styles: mapStyles }} // マップオプションを適用
       >
         {/* マーカーで現在位置を表示 */}
         <Marker position={currentLocation} />
