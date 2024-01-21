@@ -2,19 +2,19 @@
 
 import "./signin.css";
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react'; 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';//ページ遷移用
 
 export default function App() {
-    const initialValues = {id:"",password:""};
-    const [formValues,setFormValues] = useState(initialValues);
-    const [formErrors,setFormErrors] = useState<{ id?: string, password?: string }>({});
-    const [isSubmit,setIsSubmit] = useState(false);
-
-    const [formErrors, setFormErrors] = useState({ id: "", password: "" });
-    const [isSubmit, setIsSubmit] = useState(false);
+    const initialValues = {id:"",password:""};//フォームの初期値
+    const [formValues,setFormValues] = useState(initialValues);//初期値空
+    const [formErrors,setFormErrors] = useState<{ id?: string, password?: string }>({}); 
+    const [isSubmit,setIsSubmit] = useState(false); 
     const [loginSuccess, setLoginSuccess] = useState(false);
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const router = useRouter();//ページ遷移用
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {//一字入力するたびに更新
         const { name, value } = e.target;
         setFormValues((prevValues) => ({
             ...prevValues,
@@ -35,13 +35,16 @@ export default function App() {
                 if (response.data.redirect) {
                     // バックエンドからのリダイレクト指示に従う
                     router.push(response.data.redirect);
-                  }
+                }
                 if (response.data.success) {
-                    // ログイン成功
-                    setLoginSuccess(true);
-                } else {
-                    // ログイン失敗
-                    setLoginSuccess(false);
+                    if(response.data.err){
+                        // ログイン失敗
+                        setLoginSuccess(false);
+                        setFormErrors({ id: "idもしくはパスワードが違います", password: "idもしくはパスワードが違います" });
+                    }else{
+                        // ログイン成功
+                        setLoginSuccess(true);
+                    }
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -73,7 +76,6 @@ export default function App() {
             errors.password = "";
         }
 
-
         return errors;
     };
 
@@ -86,15 +88,15 @@ export default function App() {
                     <div className="formField">
                         <label>ID</label>
                         <input type="text" placeholder="ID" name="id" value={formValues.id} onChange={(e) => handleChange(e)} suppressHydrationWarning={true} />
-                        <p className="errorMsg">{formErrors.id}</p> {/* Display the ID error message */}
+                        <p className="errorMsg">{formErrors.id}</p> {/* IDのエラーメッセージを表示 */}
                     </div>
                     <div className="formField">
                         <label>パスワード</label>
                         <input type="password" placeholder="パスワード" name="password" value={formValues.password} onChange={(e) => handleChange(e)} suppressHydrationWarning={true} />
-                        <p className="errorMsg">{formErrors.password}</p>
+                        <p className="errorMsg">{formErrors.password}</p> {/* パスワードのエラーメッセージを表示 */}
                     </div>
                     <button className="submitButton" type="submit">ログイン</button>
-                    <button className="newRegistButton" type="button">新規登録</button>
+                    <Link href="/signup" className="forgetButton">新規登録</Link>
                     <Link href="/forget" className="forgetButton">ID パスワードを<br />忘れた方はこちら</Link>
                     {Object.keys(formErrors).length === 0 && isSubmit && <div className="successMsg">ログイン成功</div>}
                 </div>

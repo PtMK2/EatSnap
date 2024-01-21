@@ -35,21 +35,31 @@ export default function ForgetPassword() {
         return errors;
     }
 
+    const sendEmail = async () => {
+        if (Object.keys(formErrors).length === 0 && isSubmit) {
+            try {
+                const response = await axios.post('/api/send-email', { email: formValues.email });
+                if (response.data.success) {
+                    console.log('Email sent successfully');
+                }
+            } catch (error) {
+                console.error('Error sending email', error);
+            }
+        }
+    }
+
     return (
-        <div className="formContainer" >
-            <form onSubmit={(e) => handleSubmit(e)}>
-                <h1>パスワードリセット</h1>
-                <hr/>
-                <div className="uiForm">
-                    <div className="formField">
-                        <label>メールアドレス</label>
-                        <input type="email" placeholder="メールアドレス" name="email" value={formValues.email} onChange={(e) => handleChange(e)} suppressHydrationWarning={true} />
-                        <p className="errorMsg">{formErrors.email}</p>
-                    </div>
-                    <button className="submitButton" type="submit">リセットリンクを送信</button>
-                    {Object.keys(formErrors).length === 0 && isSubmit && <div className="successMsg">リセットリンクを送信しました。メールをご確認ください。</div>}
+        <div className="container">
+            <h1>パスワードを忘れた方</h1>
+            <form onSubmit={handleSubmit} noValidate>
+                <div className="formRow">
+                    <label>メールアドレス</label>
+                    <input type="email" name="email" onChange={handleChange} />
+                    {formErrors.email && isSubmit && <span className="errorMessage">{formErrors.email}</span>}
                 </div>
+                <button type="submit">送信</button>
             </form>
+            <Link href="/login">ログインに戻る</Link>
         </div>
     );
 }
