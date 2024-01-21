@@ -61,15 +61,15 @@ button{
     padding: 10px 30px;
     border-radius: 5px;
     border: none;
-    background-color: #26a8ff;
+    background-color: #000000 !important; 
+    color: #ffffff;
     width:100%;
     font-size: 15px;
     cursor: pointer;
     transition: all 0.2s;
 }
-
 button:hover{
-    background-color: #0099ff;
+    background-color: #212121 ;
     opacity: 0.8;   
 }
 

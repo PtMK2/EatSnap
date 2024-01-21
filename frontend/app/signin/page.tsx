@@ -2,13 +2,14 @@
 
 import "./signin.css";
 import axios from 'axios';
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import Link from 'next/link';
 
 export default function App() {
-    const router = useRouter();
-    const initialValues: { id: string; password: string } = { id: "", password: "" };
-    const [formValues, setFormValues] = useState<{ id: string; password: string }>(initialValues);
+    const initialValues = {id:"",password:""};
+    const [formValues,setFormValues] = useState(initialValues);
+    const [formErrors,setFormErrors] = useState<{ id?: string, password?: string }>({});
+    const [isSubmit,setIsSubmit] = useState(false);
 
     const [formErrors, setFormErrors] = useState({ id: "", password: "" });
     const [isSubmit, setIsSubmit] = useState(false);
@@ -72,6 +73,7 @@ export default function App() {
             errors.password = "";
         }
 
+
         return errors;
     };
 
@@ -92,6 +94,8 @@ export default function App() {
                         <p className="errorMsg">{formErrors.password}</p>
                     </div>
                     <button className="submitButton" type="submit">ログイン</button>
+                    <button className="newRegistButton" type="button">新規登録</button>
+                    <Link href="/forget" className="forgetButton">ID パスワードを<br />忘れた方はこちら</Link>
                     {Object.keys(formErrors).length === 0 && isSubmit && <div className="successMsg">ログイン成功</div>}
                 </div>
             </form>
