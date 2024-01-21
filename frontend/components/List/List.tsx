@@ -2,7 +2,7 @@ import React, { useState, useEffect, createRef } from 'react';
 import { CircularProgress, Grid, Typography, InputLabel, MenuItem, FormControl, Select } from '@mui/material';
 
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
-import useStyles from './styles.js';
+import useStyles from './style.js';
 
 
 

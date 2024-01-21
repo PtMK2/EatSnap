@@ -6,9 +6,24 @@ import Grid from '@mui/material/Grid';
 import HomeBar from '../components/HomeBar/Homebar';
 import List from '../components/List/List';
 import Map from '../components/Map/Map';
-
+import { getPlacesData } from '../api/index';
 export default function Home() {
     const [showList, setShowList] = useState(false);
+
+    const [places, setPlaces] = useState([]);
+
+    const [coordinates, setCoordinates] = useState({});
+    const [bounds, setBounds]           = useState(null);
+    useEffect(() => {
+        getPlacesData()
+            .then((data: React.SetStateAction<never[]>) => {
+                console.log(data);
+
+                setPlaces(data);
+        })
+    
+    }, []);
+
 
     // ボタンがクリックされたときのハンドラー
     const toggleList = () => {
@@ -24,7 +39,10 @@ export default function Home() {
                     {showList && <List />}
                 </Grid>
                 <Grid item xs={12} md={8}>
-                    <Map />
+                    <Map 
+                        setCoordinates={setCoordinates}
+                        setBOunds={setBounds}
+                        coordinates={coordinates}/>
                 </Grid>
             </Grid>
             <HomeBar />
