@@ -61,7 +61,7 @@ export default function Home() {
   
     const onPlaceChanged = () => {
       const lat = autocomplete?.getPlace()?.geometry?.location?.lat();
-      const lng = autocomplete.getPlace().geometry.location.lng();
+      const lng = autocomplete?.getPlace().geometry.location.lng();
   
       setCoords({ lat, lng });
     };
