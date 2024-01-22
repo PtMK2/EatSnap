@@ -2,7 +2,7 @@ import React from 'react';
 import { AppBar, Typography, InputBase, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Autocomplete } from '@react-google-maps/api';
-import { Toolbar, Title, Search, InputRoot, InputInput } from './style';
+import { Toolbar, Title, Search, InputRoot, InputInput } from './HomeBarStyle';
 
 const HomeBar = ({ onPlaceChanged, onLoad }: { onPlaceChanged: any, onLoad: any }) => {
 
@@ -19,10 +19,6 @@ const HomeBar = ({ onPlaceChanged, onLoad }: { onPlaceChanged: any, onLoad: any 
             <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
               <Search>
                   <SearchIcon />
-                import { InputBase } from '@mui/material';
-
-                // ...
-
                 <InputBase placeholder="Search…" components={{ Root: InputRoot, Input: InputInput }} />
               </Search>
             </Autocomplete>
