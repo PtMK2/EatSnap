@@ -4,38 +4,32 @@ import React, { useState, useEffect } from 'react';
 import {CssBaseline, Grid} from '@mui/material';
 import HomeBar from '../components/HomeBar/Homebar';
 import List from '../components/List/List';
-import Map from '../components/Map/Map';
+import Map,{Place} from '../components/Map/Map';
 import { getPlacesData } from '../api/index';
 
 interface Coords {
-    lat: number;
-    lng: number;
-  }
-  
+  lat: number;
+  lng: number;
+}
+
 interface Bounds {
-    sw: Coords;
-    ne: Coords;
-  }
-  
-interface Place {
-    name: string;
-    rating: number;
-    num_reviews: number;
-  }
+  sw: Coords;
+  ne: Coords;
+}
 
 export default function Home() {
-    const [type, setType] = useState<string>('restaurants');
-    const [rating, setRating] = useState<number>(0);
-  
-    const [coords, setCoords] = useState<Coords>({ lat: 0, lng: 0 });
-    const [bounds, setBounds] = useState<Bounds | null>(null);
+  const [type, setType] = useState<string>('restaurants');
+  const [rating, setRating] = useState<number>(0);
 
-    const [filteredPlaces, setFilteredPlaces] = useState<Place[]>([]);
-    const [places, setPlaces] = useState<Place[]>([]);
-  
-    const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
-    const [childClicked, setChildClicked] = useState<any>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [coords, setCoords] = useState<Coords>({ lat: 0, lng: 0 });
+  const [bounds, setBounds] = useState<Bounds | null>(null);
+
+  const [filteredPlaces, setFilteredPlaces] = useState<Place[]>([]); // Map.tsxからインポートしたPlace型を使用
+  const [places, setPlaces] = useState<Place[]>([]); // Map.tsxからインポートしたPlace型を使用
+
+  const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
+  const [childClicked, setChildClicked] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   
     useEffect(() => {
       navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
@@ -104,7 +98,7 @@ export default function Home() {
               setBounds={setBounds}
               setCoords={setCoords}
               coords={coords}
-              places={filteredPlaces.length ? filteredPlaces : places}
+              placeTag={filteredPlaces.length ? filteredPlaces : places}
             />
           </Grid>
         </Grid>
