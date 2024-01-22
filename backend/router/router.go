@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	sessioninfo "github.com/PtMK2/EatSnap/backend/Sessioninfo"
+	"github.com/PtMK2/EatSnap/backend/api"
 
 	"github.com/PtMK2/EatSnap/backend/controller"
 	"github.com/gin-contrib/sessions"
@@ -41,6 +42,9 @@ func GetRouter() *gin.Engine {
 	router.POST("/signup", controller.PostSignup)
 	router.GET("/login", controller.GetLogin)
 	router.POST("/login", controller.PostLogin)
+	router.GET("/api/places", func(c *gin.Context) {
+		api.HandlePlaces(c.Writer, c.Request)
+	})
 
 	return router
 }
