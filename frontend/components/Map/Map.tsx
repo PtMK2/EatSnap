@@ -6,7 +6,7 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import Rating from '@mui/lab/Rating';
 
 import mapStyles from '../../app/mapStyles';
-import useStyles from './style';
+import { StyledPaper, StyledMapContainer, StyledMarkerContainer, StyledPointer } from './MapStyles.js';
 
 // プレイスオブジェクトの型定義
 interface Place {
@@ -33,7 +33,6 @@ interface MapProps {
 }
 
 const Map: React.FC<MapProps> = ({ coords, places, setCoords, setBounds, setChildClicked }) => {
-  const classes = useStyles();
   const matches = useMediaQuery('(min-width:600px)');
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -42,7 +41,7 @@ const Map: React.FC<MapProps> = ({ coords, places, setCoords, setBounds, setChil
   }, []);
 
   return (
-    <div className={classes.mapContainer}>
+    <StyledMapContainer>
       {isLoaded && (
         <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}>
           <GoogleMap
@@ -56,28 +55,27 @@ const Map: React.FC<MapProps> = ({ coords, places, setCoords, setBounds, setChil
           >
             {places.length > 0 && places.map((place, i) => (
               <Marker
-              position={{ lat: Number(place.latitude), lng: Number(place.longitude) }}
-              key={i}
-                >
+                position={{ lat: Number(place.latitude), lng: Number(place.longitude) }}
+                key={i}
+              >
                 {!matches
                   ? <CheckBoxOutlineBlankIcon color="primary" fontSize="large" />
                   : (
-                    <Paper elevation={3} className={classes.paper}>
-                      <Typography className={classes.typography} variant="subtitle2" gutterBottom> {place.name}</Typography>
+                    <StyledPaper>
+                      <Typography variant="subtitle2" gutterBottom> {place.name}</Typography>
                       <img
-                        className={classes.pointer}
                         src={place.photo ? place.photo.images.large.url : 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'}
                         alt={place.name}
                       />
                       <Rating name="read-only" size="small" value={Number(place.rating)} readOnly />
-                    </Paper>
+                    </StyledPaper>
                   )}
               </Marker>
             ))}
           </GoogleMap>
         </LoadScript>
       )}
-    </div>
+    </StyledMapContainer>
   );
 };
 
