@@ -9,9 +9,9 @@ import mapStyles from '../../app/mapStyles';
 import useStyles from './style';
 
 // プレイスオブジェクトの型定義
-export interface Place {
-  latitude: string;
-  longitude: string;
+interface Place {
+  latitude: number;
+  longitude: number;
   name: string;
   photo?: {
     images: {
@@ -20,7 +20,7 @@ export interface Place {
       }
     }
   };
-  rating: string;
+  rating: number;
 }
 
 // Mapコンポーネントのプロップスの型定義
