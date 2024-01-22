@@ -1,12 +1,12 @@
 import React from 'react';
-import { Box, Typography, Button, Card, CardMedia, CardContent, CardActions, Chip } from '@material-ui/core';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import PhoneIcon from '@material-ui/icons/Phone';
-import Rating from '@material-ui/lab/Rating';
+import { Box, Typography, Button, Card, CardMedia, CardContent, CardActions, Chip } from '@mui/material';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PhoneIcon from '@mui/icons-material/Phone';
+import Rating from '@mui/lab/Rating';
 
-import useStyles from './styles.js';
+import useStyles from './style.js';
 
-const PlaceDetails = ({ place, selected, refProp }) => {
+const PlaceDetails = ({ place, selected, refProp }: { place: any, selected: any, refProp: any }) => {
   if (selected) refProp?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   const classes = useStyles();
 
@@ -35,13 +35,13 @@ const PlaceDetails = ({ place, selected, refProp }) => {
             {place.ranking}
           </Typography>
         </Box>
-        {place?.awards?.map((award) => (
+        {place?.awards?.map((award: any) => (
           <Box display="flex" justifyContent="space-between" my={1} alignItems="center">
             <img src={award.images.small} />
             <Typography variant="subtitle2" color="textSecondary">{award.display_name}</Typography>
           </Box>
         ))}
-        {place?.cuisine?.map(({ name }) => (
+        {place?.cuisine?.map(({ name }: { name: string }) => (
           <Chip key={name} size="small" label={name} className={classes.chip} />
         ))}
         {place.address && (
