@@ -33,7 +33,7 @@ export default function Home() {
     const [filteredPlaces, setFilteredPlaces] = useState<Place[]>([]);
     const [places, setPlaces] = useState<Place[]>([]);
   
-    const [autocomplete, setAutocomplete] = useState(null);
+    const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
     const [childClicked, setChildClicked] = useState(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
   
@@ -64,7 +64,9 @@ export default function Home() {
       }
     }, [bounds, type, coords]);
   
-    const onLoad = (autoC: google.maps.places.Autocomplete) => setAutocomplete(autoC);
+
+
+    const onLoad = (autoC: google.maps.places.Autocomplete | null) => setAutocomplete(autoC);
 
     const onPlaceChanged = () => {
     if (autocomplete) {
