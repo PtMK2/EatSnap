@@ -17,6 +17,7 @@
     "@mui/material": "^5.15.5",
     "@react-google-maps/api": "^2.19.2",
     "@types/axios": "^0.14.0",
+    "@types/googlemaps": "^3.43.3",
     "axios": "^1.6.5",
     "framer-motion": "^10.18.0",
     "next": "14.0.3",
