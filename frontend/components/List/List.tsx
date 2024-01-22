@@ -5,13 +5,12 @@ import PlaceDetails from '../PlaceDetails/PlaceDetails';
 import useStyles from './style.js';
 
 
-
-const List = ({ places, type, setType, rating, setRating, childClicked, isLoading }) => {
+const List = ({ places, type, setType, rating, setRating, childClicked, isLoading }: { places: Array<any>, type: string, setType: Function, rating: string, setRating: Function, childClicked: string, isLoading: boolean }) => {
   const [elRefs, setElRefs] = useState([]);
   const classes = useStyles();
 
   useEffect(() => {
-    setElRefs((refs) => Array(places.length).fill().map((_, i) => refs[i] || createRef()));
+    setElRefs((refs) => Array(places.length).fill(null).map((_, i) => refs[i] || createRef()));
   }, [places]);
 
   return (
@@ -41,7 +40,7 @@ const List = ({ places, type, setType, rating, setRating, childClicked, isLoadin
             </Select>
           </FormControl>
           <Grid container spacing={3} className={classes.list}>
-            {places?.map((place, i) => (
+            {places?.map((place,i) => (
               <Grid ref={elRefs[i]} key={i} item xs={12}>
                 <PlaceDetails selected={Number(childClicked) === i} refProp={elRefs[i]} place={place} />
               </Grid>
