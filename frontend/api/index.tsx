@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const URL = "https://travel-advisor.p.rapidapi.com/restaurants/list-in-boundary";
 
@@ -10,17 +10,17 @@ const options = {
     tr_longitude: '109.149359',
   },
   headers: {
-    'X-RapidAPI-Key': process.env.NEXT_PUBLIC_TRABEL_API_KEY,
+    'X-RapidAPI-Key': process.env.NEXT_PUBLIC_TRABEL_API_KEY || '',
     'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com'
   }
 };
 
-export const getPlacesData = async () => {
+export const getPlacesData = async (): Promise<any> => {
   try{
-    const { data: { data }} = await axios.get(URL, options);
+    const { data: { data }}: AxiosResponse<any> = await axios.get(URL, options);
 
     return data;
-    } catch (error){
-      console.error("Error:", error);
-    }
+  } catch (error){
+    console.error("Error:", error);
+  }
 }

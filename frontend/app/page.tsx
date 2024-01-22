@@ -8,15 +8,22 @@ import Map from '../components/Map/Map';
 import { getPlacesData } from '../api/index';
 
 export default function Home() {
+    type Place = {
+      name: string;
+      rating: number;
+      num_reviews: number;
+      // 必要に応じて他のプロパティを追加...
+    };
+
+
     const [type, setType] = useState('restaurants');
-    const [rating, setRating] = useState('');
+    const [rating, setRating] = useState<number>(0);
   
     const [coords, setCoords] = useState({});
     const [bounds, setBounds] = useState(null);
   
-    const [weatherData, setWeatherData] = useState([]);
-    const [filteredPlaces, setFilteredPlaces] = useState([]);
-    const [places, setPlaces] = useState([]);
+    const [filteredPlaces, setFilteredPlaces] = useState<Place[]>([]);
+    const [places, setPlaces] = useState<Place[]>([]);
   
     const [autocomplete, setAutocomplete] = useState(null);
     const [childClicked, setChildClicked] = useState(null);
@@ -30,7 +37,7 @@ export default function Home() {
   
     useEffect(() => {
       const filtered = places.filter((place) => Number(place.rating) > rating);
-  
+    
       setFilteredPlaces(filtered);
     }, [rating]);
   
@@ -38,8 +45,6 @@ export default function Home() {
       if (bounds) {
         setIsLoading(true);
   
-        getWeatherData(coords.lat, coords.lng)
-          .then((data) => setWeatherData(data));
   
         getPlacesData(type, bounds.sw, bounds.ne)
           .then((data) => {
@@ -83,7 +88,6 @@ export default function Home() {
               setCoords={setCoords}
               coords={coords}
               places={filteredPlaces.length ? filteredPlaces : places}
-              weatherData={weatherData}
             />
           </Grid>
         </Grid>

@@ -5,7 +5,7 @@ import PlaceDetails from '../PlaceDetails/PlaceDetails';
 import useStyles from './style.js';
 
 
-const List = ({ places, type, setType, rating, setRating, childClicked, isLoading }: { places: Array<any>, type: string, setType: Function, rating: string, setRating: Function, childClicked: string, isLoading: boolean }) => {
+const List = ({ places, type, setType, rating, setRating, childClicked, isLoading }: { places: Array<any>, type: string, setType: Function, rating: number, setRating: Function, childClicked: string, isLoading: boolean }) => {
   const [elRefs, setElRefs] = useState([]);
   const classes = useStyles();
 
