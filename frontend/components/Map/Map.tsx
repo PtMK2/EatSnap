@@ -9,7 +9,7 @@ import mapStyles from '../../app/mapStyles';
 import useStyles from './style';
 
 // プレイスオブジェクトの型定義
-export interface Place {
+interface Place {
   latitude: string;
   longitude: string;
   name: string;
