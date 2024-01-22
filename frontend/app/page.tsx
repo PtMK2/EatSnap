@@ -13,17 +13,9 @@ interface Coords {
 }
 
 interface Bounds {
-    sw: Coords;
-    ne: Coords;
-  }
-  
-interface Place {
-    name: string;
-    rating: number;
-    num_reviews: number;
-    latitude: number;
-    longitude: number;
-  }
+  sw: Coords;
+  ne: Coords;
+}
 
 export default function Home() {
   const [type, setType] = useState<string>('restaurants');
