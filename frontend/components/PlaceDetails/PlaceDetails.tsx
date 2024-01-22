@@ -4,11 +4,10 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
 import Rating from '@mui/lab/Rating';
 
-import useStyles from './style.js';
+import { StyledChip, StyledSubtitle, StyledSpacing } from './PlaceDetailStyle.js';
 
 const PlaceDetails = ({ place, selected, refProp }: { place: any, selected: any, refProp: any }) => {
   if (selected) refProp?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  const classes = useStyles();
 
   return (
     <Card elevation={6}>
@@ -42,17 +41,19 @@ const PlaceDetails = ({ place, selected, refProp }: { place: any, selected: any,
           </Box>
         ))}
         {place?.cuisine?.map(({ name }: { name: string }) => (
-          <Chip key={name} size="small" label={name} className={classes.chip} />
+          <StyledChip key={name}>
+          <Chip size="small" label={name} />
+            </StyledChip>
         ))}
         {place.address && (
-          <Typography gutterBottom variant="body2" color="textSecondary" className={classes.subtitle}>
+          <StyledSubtitle>
             <LocationOnIcon />{place.address}
-          </Typography>
+          </StyledSubtitle>
         )}
         {place.phone && (
-          <Typography variant="body2" color="textSecondary" className={classes.spacing}>
+          <StyledSpacing>
             <PhoneIcon /> {place.phone}
-          </Typography>
+          </StyledSpacing>
         )}
       </CardContent>
       <CardActions>
