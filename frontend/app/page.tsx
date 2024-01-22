@@ -1,12 +1,12 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
+import {CssBaseline, Grid} from '@mui/material';
 import HomeBar from '../components/HomeBar/Homebar';
 import List from '../components/List/List';
 import Map from '../components/Map/Map';
 import { getPlacesData } from '../api/index';
+
 export default function Home() {
     const [type, setType] = useState('restaurants');
     const [rating, setRating] = useState('');
