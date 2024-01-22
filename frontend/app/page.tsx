@@ -34,7 +34,7 @@ export default function Home() {
     const [places, setPlaces] = useState<Place[]>([]);
   
     const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
-    const [childClicked, setChildClicked] = useState(null);
+    const [childClicked, setChildClicked] = useState<any>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
   
     useEffect(() => {
