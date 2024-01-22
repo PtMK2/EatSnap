@@ -10,8 +10,8 @@ import useStyles from './style';
 
 // プレイスオブジェクトの型定義
 interface Place {
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   name: string;
   photo?: {
     images: {
@@ -20,7 +20,7 @@ interface Place {
       }
     }
   };
-  rating: string;
+  rating: number;
 }
 
 // Mapコンポーネントのプロップスの型定義

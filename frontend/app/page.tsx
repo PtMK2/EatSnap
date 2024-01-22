@@ -21,6 +21,8 @@ interface Place {
     name: string;
     rating: number;
     num_reviews: number;
+    latitude: number;
+    longitude: number;
   }
 
 export default function Home() {
