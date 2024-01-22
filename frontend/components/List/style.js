@@ -1,4 +1,5 @@
-import { alpha, makeStyles } from '@material-ui/core/styles';
+import { alpha, makeStyles } from '@mui/system';
+
 
 export default makeStyles((theme) => ({
   title: {
