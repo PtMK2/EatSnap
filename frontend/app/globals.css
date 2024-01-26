@@ -113,7 +113,7 @@ input[name="slideshow"] {
 }
 
 /* :::::: mechanism :::::: */
-#switch1:checked ~ .slideContents {
+/* #switch1:checked ~ .slideContents {
 	transform: translateX(0);
 }
 #switch2:checked ~ .slideContents {
@@ -127,7 +127,7 @@ input[name="slideshow"] {
 }
 #switch5:checked ~ .slideContents {
 	transform: translateX(-80%);
-}
+} */
 
 /* :::::: arrow mechanism :::::: */
 .arrow label {
