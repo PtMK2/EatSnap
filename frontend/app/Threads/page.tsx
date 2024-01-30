@@ -15,6 +15,8 @@ const Page: React.FC = () => {
   const [newPost, setNewPost] = useState('');
   const [newImages, setNewImages] = useState<File[]>([]);
   const [showPostForm, setShowPostForm] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalImage, setModalImage] = useState('');
 
   const handlePostChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewPost(event.target.value);
@@ -58,18 +60,45 @@ const Page: React.FC = () => {
     }));
   };
 
+  const openModal = (image: string) => {
+    setModalImage(image);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div className="threads-page">
-      <div className="back-to-top" onClick={() => window.scrollTo(0, 0)}>
-        ↑
-      </div>
+      <header className="header">
+        <button className="scroll-to-top" onClick={scrollToTop}>
+          ↑ 
+        </button>
+      </header>
       <div className="posts">
         {posts.map(post => (
           <div key={post.id} className="post">
             <p>{post.content}</p>
             {post.images.length > 0 && (
               <div className="post-image-container">
-                <img src={post.images[post.currentImageIndex]} alt={`投稿画像 ${post.currentImageIndex + 1}`} />
+                {post.images.length > 1 && (
+                  <button 
+                    className="slide-button left" 
+                    onClick={() => handleImageSlide(post.id, 'left')}
+                  >
+                    &lt;
+                  </button>
+                )}
+                <img 
+                  src={post.images[post.currentImageIndex]} 
+                  alt={`投稿画像 ${post.currentImageIndex + 1}`} 
+                  onClick={() => openModal(post.images[post.currentImageIndex])}
+                />
                 {post.images.length > 1 && (
                   <button 
                     className="slide-button right" 
@@ -84,22 +113,30 @@ const Page: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className="post-toggle" onClick={() => setShowPostForm(!showPostForm)}>
+      <button className="post-toggle" onClick={() => setShowPostForm(!showPostForm)}>
         投稿
-      </div>
+      </button>
       {showPostForm && (
         <div className="post-form-overlay">
           <form className="post-form" onSubmit={handlePostSubmit}>
             <textarea
               value={newPost}
               onChange={handlePostChange}
-              placeholder="なんか書いて"
+              placeholder="何が起きていますか？"
             />
             <input type="file" multiple onChange={handleImagesChange} />
-            <button type="submit">ツイートする</button>
+            <button type="submit">投稿する</button>
           </form>
         </div>
       )}
+      {showModal && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content">
+            <img src={modalImage} alt="拡大画像" />
+          </div>
+        </div>
+      )}
+      <footer className="footer"></footer>
     </div>
   );
 };

@@ -4,33 +4,78 @@
     background-color: black;
     max-width: 600px;
     margin: auto;
-    padding: 20px;
+    padding: 20px 0; /* 余白の調整 */
     position: relative;
     min-height: 100vh;
   }
   
-  .back-to-top {
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-    background-color: #555;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 16px;
+  .header {
+    background-color: #444; /* ヘッダーの色変更 */
+    padding: 15px 0; /* パディングの調整 */
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* 影を追加 */
   }
   
-  .post-toggle {
-    position: fixed;
-    bottom: 10px;
-    right: 20px;
+  .scroll-to-top {
     background-color: #555;
     color: white;
-    padding: 10px 15px;
+    padding: 10px;
+    border: none;
     border-radius: 50%;
     cursor: pointer;
     font-size: 16px;
+    width: 50px;
+    height: 50px;
+    line-height: 30px;
+    text-align: center;
+    display: inline-block;
+  }
+  
+  .posts .post {
+    background-color: #222;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* 影を追加 */
+  }
+  
+  
+  .post-image-container {
+    position: relative;
+    max-width: 100%;
+    margin-top: 10px;
+  }
+  
+  .post-image-container img {
+    width: 100%;
+    border-radius: 4px;
+  }
+  
+  .slide-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 5px 10px;
+  }
+  
+  .slide-button.left {
+    left: 10px;
+  }
+  
+  .slide-button.right {
+    right: 10px;
+  }
+  
+  .timestamp {
+    color: #888;
+    font-size: 0.8em;
+    margin-top: 10px;
   }
   
   .post-form-overlay {
@@ -85,44 +130,51 @@
     font-size: 16px;
   }
   
-  .posts .post {
-    background-color: #222;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 5px;
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
-  .post-image-container {
-    position: relative;
+  .modal-content {
+    max-width: 90%;
+    max-height: 90%;
+  }
+  
+  .modal-content img {
     max-width: 100%;
-    margin-top: 10px;
-  }
-  
-  .post-image-container img {
-    width: 100%;
+    max-height: 100%;
     border-radius: 4px;
   }
   
-  .slide-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
+  .footer {
+    background-color: #444; /* フッターの色変更 */
+    padding: 15px 0; /* パディングの調整 */
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.5); /* 影を追加 */
+  }
+  
+  .post-toggle {
+    position: fixed;
+    bottom: 80px; /* フッターの少し上に配置 */
+    right: 20px;
+    background-color: #555;
     color: white;
+    padding: 10px;
     border: none;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 24px;
-    padding: 5px 10px;
-  }
-  
-  .slide-button.right {
-    right: 10px;
-  }
-  
-  .timestamp {
-    color: #888;
-    font-size: 0.8em;
-    margin-top: 10px;
+    font-size: 16px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
   }
   
