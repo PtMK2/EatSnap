@@ -1,14 +1,31 @@
 ﻿"use client"
-
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 export default function App() {
-
-	const handleSubmit = (event: { preventDefault: () => void; }) => {
+    const router = useRouter();
+	const handleSubmit = async (event: { preventDefault: () => void; }) => {
 		// ここでサーバーに送信する処理を書くとか？
 		event.preventDefault();
 		console.log('Form submitted!');
 		const formData = new FormData(document.getElementById('f') as HTMLFormElement);
 		// (document.getElementById('f') as HTMLFormElement).submit();
 		console.log(Array.from(formData.entries()));
+		//サーバーに送信処理 by林田　動くかわからない
+		try {
+			const response = await axios.post('http://localhost:8080/signup', formData, {
+				//ここの処理は謎です。 by林田
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			});
+            if (response.data.redirect) {
+                // バックエンドからのリダイレクト指示に従う
+                router.push(response.data.redirect);
+              }
+			console.log(response.data);
+		} catch (error) {
+			console.error(error);
+		}
 	};
 	return (
 		<>
